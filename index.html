@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Darren & Hanne — 2026.11.07</title>
+<meta name="description" content="Darren & Hanne 婚禮邀請．2026 年 11 月 7 日．出席回函">
+
+<meta property="og:title" content="Darren & Hanne 婚禮邀請">
+<meta property="og:description" content="2026 年 11 月 7 日．誠摯邀請你來">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ① 設定區 — 只要改這裡就好
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // ── 新人 ──────────────────────────────────────────────
+  groom: 'Darren',
+  bride: 'Hanne',
+
+  // ── 封面標語 ──────────────────────────────────────────
+  taglineEn: 'You are my greatest adventure.',
+  taglineZh: '你是我這輩子最大的冒險',
+
+  // ── 日期 ──────────────────────────────────────────────
+  dateISO: '2026-11-07T12:30:00+08:00',   // 倒數基準＝開席
+  dateEn:  '2026.11.07 (SAT)',
+  quote:   '在無數個尋常的日子裡，謝謝你願意陪我把它們過成不尋常。',
+
+  // ── 證婚（30 人上限）──────────────────────────────────
+  // 只有網址帶 ?ceremony=1 的人看得到：
+  //   一般賓客   →  .../index.html
+  //   觀禮 30 位 →  .../index.html?ceremony=1
+  ceremony: {
+    zh:    '證婚儀式',
+    en:    'The Holy Ceremony',
+    hero:  '10:20 AM 典禮開始',
+    place: '台北國泰萬怡酒店',
+    hall:  '14F 戶外露臺區',
+    time:  '10:00 入場｜10:20 典禮開始',
+    addr:  '台北市中山區民生東路三段 6 號',
+    notes: [
+      { k: '座位', v: '席次有限，敬邀至親觀禮' },
+      { k: '天氣', v: '戶外場地，遇雨改於室內舉行' },
+    ],
+  },
+
+  // ── 午宴（所有賓客都看得到）────────────────────────────
+  banquet: {
+    zh:    '午宴',
+    en:    'The Wedding Banquet',
+    hero:  '12:30 PM 準時開席',
+    place: '台北國泰萬怡酒店',
+    hall:  '2F 霖苑廳．陳李府喜宴',
+    time:  '12:00 入席｜12:30 開席',
+    addr:  '台北市中山區民生東路三段 6 號',
+    notes: [
+      { k: '捷運', v: '行天宮站 2 號出口，步行約 8 分鐘' },
+      { k: '停車', v: '飯店 B3–B4 停車場，賓客免費' },
+    ],
+  },
+
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=%E5%8F%B0%E5%8C%97%E5%9C%8B%E6%B3%B0%E8%90%AC%E6%80%A1%E9%85%92%E5%BA%97',
+
+  // ── 服裝建議 ──────────────────────────────────────────
+  // ← 這三色是照你們婚紗照配的，請換成你們真正想要的；不需要就寫 dressCode: []
+  dressCode: [
+    { hex: '#f2ece1', zh: '奶油白', en: 'Cream' },
+    { hex: '#d8cbb4', zh: '燕麥米', en: 'Oatmeal' },
+    { hex: '#9aa89b', zh: '淺灰綠', en: 'Sage' },
+  ],
+
+  // ── 照片 ──────────────────────────────────────────────
+  heroPhoto: 'photos/hero.jpg',
+  heroFocus: '50% 8%',       // 人物想往下移就把數字調小
+  heroText:  'dark',         // 淺色照片用 dark，深色照片用 light
+  gallery:   [],
+
+  rsvpDeadline: '10 月 7 日',
+
+  // ── Google 表單 ───────────────────────────────────────
+  formAction: 'https://docs.google.com/forms/d/e/1FAIpQLScymXjE1Sb7hlwOMKhHqX7xtmTvEcSo_Dxl8wzLGzArqOOgCg/formResponse',
+
+  // 表單那題按了 Google 內建的「新增『其他』」之後改成 true
+  allergyOtherEnabled: false,
+};
+
+/* 表單欄位代號 — 從你的表單抓好的，不用動 */
+const FIELD = {
+  name:       'entry.688717120',
+  contact:    'entry.2037776860',
+  relation:   'entry.1738306370',
+  attending:  'entry.2126822305',
+  adults:     'entry.1672724487',
+  kidsSeated: 'entry.1605065909',
+  kidsLap:    'entry.1526729827',
+  diet:       'entry.1776926557',
+  message:    'entry.1780075910',
+};
+const ATTEND_YES = '是，我會出席';
+const ATTEND_NO  = '抱歉無法出席，獻上祝福';
+
+/* 與新人關係：送進 Google 表單的就是這些字，可自由增刪 */
+const RELATIONS = [
+  '男方家人親戚', '男方同事長官', '男方同學好友',
+  '女方家人親戚', '女方同事長官', '女方同學好友',
+  '雙方共同朋友', '其他',
+];
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ② 設計語彙 — 宣紙、墨、胭脂
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --paper:      #f4efe6;
+  --paper-2:    #ebe3d6;
+  --card:       #faf7f1;
+  --wash:       #ded4c4;
+  --ink:        #2a2724;
+  --ink-soft:   #6f675e;
+  --ink-faint:  #756d60;
+  --ink-ghost:  #a49a8d;
+  --rouge:      #9c4f4a;
+  --sage-deep:  #5f7a6f;
+
+  --serif-tc: 'Noto Serif TC', 'Songti TC', serif;
+  --serif-en: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
+
+  --col: 34rem;
+  --gut: 1.75rem;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+[hidden]{ display:none !important; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif-tc); font-weight:300;
+  line-height:1.9; letter-spacing:.04em;
+  overflow-x:hidden; -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+:focus-visible{ outline:2px solid var(--rouge); outline-offset:3px; }
+.wrap{ width:100%; max-width:var(--col); margin-inline:auto; padding-inline:var(--gut); }
+
+/* ── 區塊標題：英文大標 ＋ 中文副標 ──────────────────── */
+.sec{ padding:5.5rem 0; }
+.sec--tint{ background:var(--paper-2); }
+.sec__head{ text-align:center; margin-bottom:3rem; }
+.sec__en{
+  font-family:var(--serif-en); font-weight:400;
+  font-size:clamp(1.9rem,8vw,2.5rem); letter-spacing:.06em;
+  color:var(--ink); margin:0;
+}
+.sec__zh{
+  font-family:var(--serif-tc); font-weight:400;
+  font-size:.82rem; letter-spacing:.42em; color:var(--rouge);
+  margin:.7rem 0 0; padding-left:.42em;
+}
+.sec__head::after{
+  content:''; display:block; width:2.2rem; height:1px;
+  background:var(--wash); margin:1.6rem auto 0;
+}
+
+/* ── 封面 ──────────────────────────────────────────── */
+.hero{
+  position:relative; min-height:100svh;
+  display:flex; align-items:flex-end; justify-content:center;
+  padding:10svh var(--gut) 7svh; overflow:hidden; background:var(--paper);
+}
+.hero__bg{
+  position:absolute; inset:0; z-index:0; background-size:cover;
+  background-image:linear-gradient(165deg,#3b342d 0%,#241f1b 55%,#171310 100%);
+}
+.hero.has-photo .hero__bg{ animation:drift 30s ease-in-out infinite alternate; }
+@keyframes drift{ from{ transform:scale(1.04);} to{ transform:scale(1.11);} }
+.hero__veil{ position:absolute; inset:0; z-index:1; }
+.hero--light .hero__veil{
+  background:linear-gradient(to bottom,
+    rgba(250,247,241,.30) 0%, rgba(250,247,241,0) 22%,
+    rgba(244,239,230,.55) 52%, rgba(244,239,230,.93) 72%, var(--paper) 88%);
+}
+.hero--dark .hero__veil{
+  background:linear-gradient(to bottom,
+    rgba(18,16,13,.42) 0%, rgba(18,16,13,.10) 34%,
+    rgba(18,16,13,.30) 70%, rgba(18,16,13,.85) 100%);
+}
+.hero__inner{ position:relative; z-index:2; width:100%; max-width:var(--col); text-align:center; }
+.hero--light .hero__inner{ text-shadow:0 1px 20px rgba(250,247,241,.92); }
+.hero--dark  .hero__inner{ text-shadow:0 1px 26px rgba(12,10,8,.8); }
+
+.hero__eyebrow{
+  font-family:var(--serif-en); font-style:italic; font-weight:400;
+  font-size:clamp(.72rem,3.1vw,.88rem); letter-spacing:.26em;
+  text-transform:uppercase; margin:0 0 1.1rem; padding-left:.26em;
+}
+.hero__names{
+  font-family:var(--serif-en); font-weight:300;
+  font-size:clamp(2.9rem,13.5vw,4.9rem);
+  line-height:1.08; letter-spacing:.005em; margin:0;
+}
+.hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
+.hero__zh{
+  font-family:var(--serif-tc); font-weight:300;
+  font-size:clamp(.86rem,3.6vw,1rem); letter-spacing:.42em;
+  margin:1.5rem 0 0; padding-left:.42em;
+}
+.hero--light .hero__eyebrow{ color:var(--rouge); }
+.hero--light .hero__names{ color:var(--ink); }
+.hero--light .hero__zh{ color:var(--ink); opacity:.85; }
+.hero--dark .hero__eyebrow{ color:#fff; opacity:.85; }
+.hero--dark .hero__names{ color:#fff; }
+.hero--dark .hero__zh{ color:var(--paper); opacity:.92; }
+
+.hero__cue{
+  position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); z-index:2;
+  width:1px; height:2.4rem; animation:cue 2.6s ease-in-out infinite;
+  background:linear-gradient(to bottom,transparent,rgba(42,39,36,.5));
+}
+.hero--dark .hero__cue{ background:linear-gradient(to bottom,transparent,rgba(244,239,230,.7)); }
+@keyframes cue{ 0%,100%{opacity:.25;transform:translateX(-50%) scaleY(.6);} 50%{opacity:1;transform:translateX(-50%) scaleY(1);} }
+
+/* ── 倒數 ──────────────────────────────────────────── */
+.clock{ display:grid; grid-template-columns:repeat(4,1fr); align-items:end; }
+.cd{ position:relative; display:flex; flex-direction:column; align-items:center; gap:.7rem; }
+.cd + .cd::before{
+  content:''; position:absolute; left:0; top:.7rem; bottom:1.7rem;
+  width:1px; background:var(--wash);
+}
+.cd__n{
+  font-family:var(--serif-en); font-weight:300; line-height:1;
+  font-size:clamp(2.8rem,15vw,4rem); color:var(--rouge);
+  font-variant-numeric:lining-nums tabular-nums;
+}
+.cd__u{
+  font-family:var(--sans-tc); font-size:.66rem; font-weight:500;
+  letter-spacing:.26em; color:var(--ink-faint); padding-left:.26em;
+}
+.clock__done{
+  grid-column:1/-1; font-family:var(--serif-tc);
+  font-size:clamp(1.6rem,7vw,2.2rem); letter-spacing:.2em;
+  color:var(--rouge); text-align:center; margin:1rem 0;
+}
+.count__date{
+  text-align:center; font-family:var(--serif-en); font-size:1.35rem;
+  letter-spacing:.16em; color:var(--ink-soft); margin:2.4rem 0 0;
+}
+.quote{
+  text-align:center; margin:1.6rem auto 0; max-width:26rem;
+  font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
+}
+.quote::before{ content:'「'; color:var(--wash); }
+.quote::after{ content:'」'; color:var(--wash); }
+
+/* ── 資訊卡 ────────────────────────────────────────── */
+.card{
+  background:var(--card); border:1px solid var(--wash);
+  padding:2.4rem 1.7rem 2rem; margin-bottom:1.6rem;
+}
+.card:last-child{ margin-bottom:0; }
+.card__zh{
+  font-family:var(--serif-tc); font-weight:400; font-size:1.15rem;
+  letter-spacing:.24em; text-align:center; margin:0; color:var(--ink);
+}
+.card__en{
+  font-family:var(--serif-en); font-style:italic; font-size:1.05rem;
+  letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.3rem 0 0;
+}
+.card__hero{
+  font-family:var(--serif-en); font-size:1.85rem; letter-spacing:.05em;
+  text-align:center; color:var(--rouge); margin:1.2rem 0 1.6rem;
+}
+.card__rule{ height:1px; background:var(--wash); margin:0 0 1.6rem; }
+.card__line{ margin:0 0 .7rem; font-size:.98rem; line-height:1.95; }
+.card__line b{
+  font-family:var(--sans-tc); font-size:.78rem; font-weight:500;
+  letter-spacing:.16em; color:var(--ink-faint); margin-right:.55rem;
+}
+.card__notes{ margin-top:1.5rem; padding-top:1.3rem; border-top:1px dashed var(--wash); }
+.card__notes p{ margin:0 0 .5rem; font-size:.88rem; color:var(--ink-soft); line-height:1.9; }
+.card__notes p:last-child{ margin-bottom:0; }
+.card__notes b{
+  font-family:var(--sans-tc); font-size:.72rem; font-weight:500;
+  letter-spacing:.16em; color:var(--rouge); margin-right:.5rem;
+}
+.mapbtn{
+  display:flex; align-items:center; justify-content:center; gap:.55rem;
+  margin-top:1.5rem; padding:.85rem 1.2rem;
+  font-family:var(--sans-tc); font-size:.76rem; letter-spacing:.18em;
+  color:var(--ink); text-decoration:none;
+  border:1px solid var(--ink); background:transparent;
+  transition:background .25s ease, color .25s ease;
+}
+.mapbtn:hover{ background:var(--ink); color:var(--card); }
+.mapbtn svg{ width:.95em; height:.95em; flex:none; }
+
+/* ── 服裝建議 ──────────────────────────────────────── */
+.swatches{ display:flex; justify-content:center; gap:1.6rem; flex-wrap:wrap; }
+.sw{ text-align:center; }
+.sw__dot{
+  width:4.2rem; height:4.2rem; border-radius:50%;
+  border:1px solid var(--wash); margin:0 auto .8rem;
+}
+.sw__zh{ margin:0; font-size:.92rem; letter-spacing:.12em; }
+.sw__en{
+  margin:.1rem 0 0; font-family:var(--serif-en); font-style:italic;
+  font-size:.9rem; color:var(--ink-faint); letter-spacing:.06em;
+}
+.dress__note{ text-align:center; margin:2.6rem 0 0; font-size:.9rem; color:var(--ink-soft); letter-spacing:.1em; }
+
+/* ── 相簿 ──────────────────────────────────────────── */
+.gallery{ display:grid; gap:.7rem; padding-bottom:1rem; }
+
+/* ── 回函 ──────────────────────────────────────────── */
+.rsvp__sub{ text-align:center; font-size:.9rem; color:var(--ink-soft); margin:-1.4rem 0 2.8rem; }
+.rsvp__sub b{ font-weight:600; color:var(--rouge); }
+
+.f{ margin-bottom:1.9rem; }
+.f > label, .f > .lg{
+  display:block; font-family:var(--sans-tc); font-size:.74rem; font-weight:500;
+  letter-spacing:.18em; color:var(--ink-soft); margin-bottom:.65rem;
+}
+.f .en{ color:var(--ink-ghost); font-size:.66rem; letter-spacing:.14em; margin-left:.5em; }
+.f .req{ color:var(--rouge); margin-left:.25em; }
+.f .hint{ font-size:.68rem; letter-spacing:.06em; color:var(--ink-faint); font-weight:400; }
+
+input[type=text], input[type=tel], select, textarea{
+  width:100%; font-family:var(--serif-tc); font-size:1rem; color:var(--ink);
+  background:var(--card); border:1px solid var(--wash);
+  padding:.8rem .9rem; border-radius:0; -webkit-appearance:none; appearance:none;
+  transition:border-color .25s ease;
+}
+input:focus, select:focus, textarea:focus{ outline:0; border-color:var(--rouge); }
+textarea{ resize:vertical; min-height:5rem; line-height:1.9; }
+select{
+  background-image:
+    linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),
+    linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
+  background-position:calc(100% - 17px) 1.35rem, calc(100% - 12px) 1.35rem;
+  background-size:5px 5px,5px 5px; background-repeat:no-repeat; padding-right:2.4rem;
+}
+::placeholder{ color:var(--ink-ghost); opacity:1; }
+
+.pick{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+.pick input{ position:absolute; opacity:0; width:0; height:0; }
+.pick label{
+  position:relative; display:flex; align-items:center; justify-content:center;
+  text-align:center; min-height:4.4rem; padding:.85rem .8rem; cursor:pointer;
+  font-size:.92rem; line-height:1.55; letter-spacing:.06em; color:var(--ink-soft);
+  border:1.5px solid var(--wash); background:var(--card);
+  transition:background .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease,opacity .22s ease;
+}
+.pick input:checked + label{
+  border-color:var(--rouge); background:var(--rouge); color:var(--paper);
+  box-shadow:0 7px 20px -9px rgba(156,79,74,.8);
+}
+.pick input:checked + label::after{
+  content:'✓'; position:absolute; top:.45rem; right:.6rem; font-size:.78rem; opacity:.8;
+}
+.pick:has(input:checked) input:not(:checked) + label{ opacity:.4; }
+.pick input:focus-visible + label{ outline:2px solid var(--rouge); outline-offset:2px; }
+
+.chips{ display:flex; flex-wrap:wrap; gap:.5rem; }
+.chips input{ position:absolute; opacity:0; width:0; height:0; }
+.chips label{
+  cursor:pointer; padding:.5rem 1.05rem; font-size:.88rem; letter-spacing:.06em;
+  color:var(--ink-soft); border:1.5px solid var(--wash); border-radius:999px;
+  background:var(--card); transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.chips input:checked + label{ border-color:var(--sage-deep); background:var(--sage-deep); color:var(--paper); }
+.chips input:focus-visible + label{ outline:2px solid var(--rouge); outline-offset:2px; }
+
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:1.3rem; }
+#details{ overflow:hidden; max-height:0; opacity:0;
+  transition:max-height .55s cubic-bezier(.22,1,.36,1), opacity .4s ease; }
+#details.open{ max-height:70rem; opacity:1; }
+
+.err{ font-family:var(--sans-tc); font-size:.78rem; color:var(--rouge);
+  margin:0 0 1.2rem; min-height:1.2em; letter-spacing:.06em; }
+.send{
+  width:100%; font-family:var(--sans-tc); font-size:.88rem; font-weight:500;
+  letter-spacing:.28em; color:var(--paper); background:var(--ink);
+  border:0; padding:1.2rem; cursor:pointer; transition:background .25s ease;
+}
+.send:hover{ background:var(--rouge); }
+.send[disabled]{ opacity:.45; cursor:progress; }
+
+.done{ display:none; text-align:center; padding:2rem 0; }
+.done.show{ display:block; animation:rise .7s cubic-bezier(.22,1,.36,1) both; }
+.done__mark{ font-family:var(--serif-en); font-style:italic; font-size:3rem; color:var(--rouge); margin:0 0 1rem; }
+.done__t{ font-family:var(--serif-tc); font-size:1.3rem; letter-spacing:.16em; margin:0 0 .8rem; }
+.done__s{ font-size:.92rem; color:var(--ink-soft); margin:0; line-height:1.95; }
+
+/* ── 結尾 ──────────────────────────────────────────── */
+.foot{ padding:4rem 0 3.5rem; text-align:center; border-top:1px solid var(--wash); }
+.foot__names{ font-family:var(--serif-en); font-size:1.9rem; color:var(--ink); margin:0 0 .6rem; letter-spacing:.04em; }
+.foot__d{ font-family:var(--sans-tc); font-size:.66rem; letter-spacing:.3em; color:var(--ink-faint); margin:0; }
+
+/* ── 動態 ──────────────────────────────────────────── */
+@keyframes rise{ from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:none;} }
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+.reveal.in{ opacity:1; transform:none; }
+.hero__eyebrow,.hero__names,.hero__zh{ animation:rise 1.2s cubic-bezier(.22,1,.36,1) both; }
+.hero__eyebrow{ animation-delay:.25s; }
+.hero__names{ animation-delay:.45s; }
+.hero__zh{ animation-delay:.75s; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation:none !important; transition:none !important; }
+  .reveal{ opacity:1; transform:none; }
+}
+@media (max-width:380px){
+  :root{ --gut:1.35rem; }
+  .grid2{ grid-template-columns:1fr; gap:1.6rem; }
+  .swatches{ gap:1.1rem; }
+  .sw__dot{ width:3.6rem; height:3.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ 封面 ═══ -->
+<header class="hero" id="hero">
+  <div class="hero__bg" id="heroBg"></div>
+  <div class="hero__veil"></div>
+  <div class="hero__inner">
+    <p class="hero__eyebrow" id="dTagEn"></p>
+    <h1 class="hero__names">
+      <span id="dGroom"></span><span class="amp">&amp;</span><span id="dBride"></span>
+    </h1>
+    <p class="hero__zh" id="dTagZh"></p>
+  </div>
+  <div class="hero__cue"></div>
+</header>
+
+<!-- ═══ 倒數 ═══ -->
+<section class="sec reveal">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 class="sec__en">The Countdown</h2>
+      <p class="sec__zh">倒數計時</p>
+    </header>
+    <div class="clock" id="dClock">
+      <div class="cd"><span class="cd__n" id="cdD">—</span><span class="cd__u">DAYS</span></div>
+      <div class="cd"><span class="cd__n" id="cdH">—</span><span class="cd__u">HRS</span></div>
+      <div class="cd"><span class="cd__n" id="cdM">—</span><span class="cd__u">MIN</span></div>
+      <div class="cd"><span class="cd__n" id="cdS">—</span><span class="cd__u">SEC</span></div>
+    </div>
+    <p class="count__date" id="dDateEn"></p>
+    <p class="quote" id="dQuote"></p>
+  </div>
+</section>
+
+<!-- ═══ 婚禮資訊 ═══ -->
+<section class="sec sec--tint reveal">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 class="sec__en">Wedding Details</h2>
+      <p class="sec__zh">婚禮資訊</p>
+    </header>
+    <div id="dCards"></div>
+  </div>
+</section>
+
+<!-- ═══ 服裝建議 ═══ -->
+<section class="sec reveal" id="secDress" hidden>
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 class="sec__en">Dress Code</h2>
+      <p class="sec__zh">服裝色彩建議</p>
+    </header>
+    <div class="swatches" id="dSwatches"></div>
+    <p class="dress__note">邀請你穿著以上色系，與我們一起入鏡</p>
+  </div>
+</section>
+
+<!-- ═══ 相簿 ═══ -->
+<section class="wrap gallery reveal" id="dGallery" hidden></section>
+
+<!-- ═══ 回函 ═══ -->
+<section class="sec sec--tint reveal" id="rsvp">
+  <div class="wrap">
+    <header class="sec__head">
+      <h2 class="sec__en">Awaiting Your Reply</h2>
+      <p class="sec__zh">出席回函</p>
+    </header>
+
+    <div id="formBox">
+      <p class="rsvp__sub">為了幫你留好位子，請在 <b id="dDeadline"></b> 前告訴我們。</p>
+
+      <form id="rsvpForm" novalidate>
+        <div class="f">
+          <label for="fName">姓名<span class="en">NAME</span><span class="req">*</span></label>
+          <input type="text" id="fName" autocomplete="name" placeholder="請輸入姓名">
+        </div>
+
+        <div class="f">
+          <label for="fContact">手機號碼<span class="en">MOBILE</span></label>
+          <input type="tel" id="fContact" autocomplete="tel" inputmode="tel" placeholder="09xx-xxx-xxx">
+        </div>
+
+        <div class="f">
+          <label for="fRelation">與新人的關係<span class="en">RELATIONSHIP</span></label>
+          <select id="fRelation"><option value="">請選擇</option></select>
+        </div>
+
+        <div class="f">
+          <span class="lg">是否出席<span class="en">ATTENDANCE</span><span class="req">*</span></span>
+          <div class="pick">
+            <input type="radio" name="attend" id="aYes" value="yes">
+            <label for="aYes">是，我會出席</label>
+            <input type="radio" name="attend" id="aNo" value="no">
+            <label for="aNo">抱歉無法出席<br>獻上祝福</label>
+          </div>
+        </div>
+
+        <div id="details">
+          <div class="f">
+            <label for="fAdults">大人人數<span class="en">ADULTS</span><span class="req">*</span></label>
+            <select id="fAdults">
+              <option value="">請選擇</option>
+              <option>1</option><option>2</option><option>3</option>
+              <option>4</option><option>5</option><option>6</option>
+            </select>
+          </div>
+
+          <div class="grid2">
+            <div class="f">
+              <label for="fKidsA">兒童 <span class="hint">需座位</span></label>
+              <select id="fKidsA">
+                <option value="">—</option>
+                <option>0</option><option>1</option><option>2</option><option>3</option><option>4</option>
+              </select>
+            </div>
+            <div class="f">
+              <label for="fKidsB">兒童 <span class="hint">不佔位</span></label>
+              <select id="fKidsB">
+                <option value="">—</option>
+                <option>0</option><option>1</option><option>2</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="f">
+            <span class="lg">飲食需求<span class="en">DIETARY</span><span class="hint"> 可複選</span></span>
+            <div class="chips" id="dietChips">
+              <input type="checkbox" id="d1" value="葷食"><label for="d1">葷食</label>
+              <input type="checkbox" id="d2" value="全素"><label for="d2">全素</label>
+              <input type="checkbox" id="d3" value="蛋奶素"><label for="d3">蛋奶素</label>
+              <input type="checkbox" id="d4" value="不吃牛"><label for="d4">不吃牛</label>
+              <input type="checkbox" id="d5" value="其他過敏原"><label for="d5">其他過敏原</label>
+              <input type="checkbox" id="d6" value="其他"><label for="d6">其他</label>
+            </div>
+            <div id="allergyBox" hidden style="margin-top:1rem">
+              <input type="text" id="fAllergy" placeholder="請說明過敏原或特殊需求">
+            </div>
+          </div>
+        </div>
+
+        <div class="f">
+          <label for="fMsg">給新人的祝福<span class="en">BLESSING</span></label>
+          <textarea id="fMsg" rows="3" placeholder="留下你的悄悄話⋯"></textarea>
+        </div>
+
+        <p class="err" id="errBox" role="alert" aria-live="polite"></p>
+        <button type="submit" class="send" id="sendBtn">確認送出　SUBMIT</button>
+      </form>
+    </div>
+
+    <div class="done" id="doneBox">
+      <p class="done__mark">✦</p>
+      <h3 class="done__t" id="doneT"></h3>
+      <p class="done__s" id="doneS"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 結尾 ═══ -->
+<footer class="foot">
+  <p class="foot__names" id="dFootNames"></p>
+  <p class="foot__d">2026 . 11 . 07　TAIPEI</p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ③ 邏輯 — 以下不用改
+   ═══════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── 封面 ─────────────────────────────────────────── */
+$('dGroom').textContent     = CONFIG.groom;
+$('dBride').textContent     = CONFIG.bride;
+$('dTagEn').textContent     = CONFIG.taglineEn || '';
+$('dTagZh').textContent     = CONFIG.taglineZh || '';
+$('dDateEn').textContent    = CONFIG.dateEn;
+$('dQuote').textContent     = CONFIG.quote || '';
+$('dDeadline').textContent  = CONFIG.rsvpDeadline;
+$('dFootNames').textContent = `${CONFIG.groom} & ${CONFIG.bride}`;
+if (!CONFIG.quote) $('dQuote').hidden = true;
+
+if (CONFIG.heroPhoto) {
+  const bg = $('heroBg');
+  bg.style.backgroundImage    = `url("${CONFIG.heroPhoto}")`;
+  bg.style.backgroundPosition = CONFIG.heroFocus || 'center';
+  bg.style.backgroundRepeat   = 'no-repeat';
+  $('hero').classList.add('has-photo', CONFIG.heroText === 'dark' ? 'hero--light' : 'hero--dark');
+  const og = document.createElement('meta');
+  og.setAttribute('property','og:image'); og.content = CONFIG.heroPhoto;
+  document.head.appendChild(og);
+} else {
+  $('hero').classList.add('hero--dark');
+}
+
+/* ── 資訊卡（?ceremony=1 才顯示證婚）───────────────── */
+const CEREMONY_GUEST = new URLSearchParams(location.search).get('ceremony') === '1';
+const cards = [];
+if (CEREMONY_GUEST && CONFIG.ceremony) cards.push(CONFIG.ceremony);
+if (CONFIG.banquet) cards.push(CONFIG.banquet);
+
+const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">'
+          + '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+
+$('dCards').innerHTML = cards.map(c => `
+  <article class="card">
+    <h3 class="card__zh">【 ${esc(c.zh)} 】</h3>
+    <p class="card__en">${esc(c.en)}</p>
+    <p class="card__hero">${esc(c.hero)}</p>
+    <div class="card__rule"></div>
+    <p class="card__line"><b>地點</b>${esc(c.place)}</p>
+    ${c.hall ? `<p class="card__line"><b>廳別</b>${esc(c.hall)}</p>` : ''}
+    <p class="card__line"><b>時間</b>${esc(c.time)}</p>
+    <p class="card__line"><b>地址</b>${esc(c.addr)}</p>
+    ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　TRANSPORTATION</a>` : ''}
+    ${c.notes && c.notes.length ? `<div class="card__notes">
+      ${c.notes.map(n => `<p><b>${esc(n.k)}</b>${esc(n.v)}</p>`).join('')}
+    </div>` : ''}
+  </article>`).join('');
+
+/* ── 服裝建議 ─────────────────────────────────────── */
+if (CONFIG.dressCode && CONFIG.dressCode.length) {
+  $('secDress').hidden = false;
+  $('dSwatches').innerHTML = CONFIG.dressCode.map(c => `
+    <div class="sw">
+      <div class="sw__dot" style="background:${esc(c.hex)}"></div>
+      <p class="sw__zh">${esc(c.zh)}</p>
+      <p class="sw__en">${esc(c.en)}</p>
+    </div>`).join('');
+}
+
+/* ── 相簿 ─────────────────────────────────────────── */
+if (CONFIG.gallery && CONFIG.gallery.length) {
+  $('dGallery').hidden = false;
+  $('dGallery').innerHTML = CONFIG.gallery.map((src,i) =>
+    `<img src="${esc(src)}" alt="${esc(CONFIG.groom)} & ${esc(CONFIG.bride)} 合照 ${i+1}" loading="lazy">`).join('');
+}
+
+/* ── 關係下拉 ─────────────────────────────────────── */
+$('fRelation').insertAdjacentHTML('beforeend',
+  RELATIONS.map(r => `<option>${esc(r)}</option>`).join(''));
+
+/* ── 倒數 ─────────────────────────────────────────── */
+(function countdown(){
+  const target = new Date(CONFIG.dateISO);
+  const pad = n => String(n).padStart(2,'0');
+  const tick = () => {
+    const diff = target - new Date();
+    if (diff <= 0) {
+      $('dClock').innerHTML = '<p class="clock__done">今天就是我們的日子</p>';
+      return true;
+    }
+    const s = Math.floor(diff/1000);
+    $('cdD').textContent = Math.floor(s/86400);
+    $('cdH').textContent = pad(Math.floor(s%86400/3600));
+    $('cdM').textContent = pad(Math.floor(s%3600/60));
+    $('cdS').textContent = pad(s%60);
+  };
+  if (!tick()) { const t = setInterval(() => { if (tick()) clearInterval(t); }, 1000); }
+})();
+
+/* ── 出席分流 ─────────────────────────────────────── */
+document.querySelectorAll('input[name=attend]').forEach(r =>
+  r.addEventListener('change', () => {
+    $('details').classList.toggle('open', $('aYes').checked);
+    $('errBox').textContent = '';
+  }));
+
+/* ── 過敏原自由輸入 ───────────────────────────────── */
+const ALLERGY_TRIGGERS = ['d5','d6'];
+if (CONFIG.allergyOtherEnabled) {
+  ALLERGY_TRIGGERS.forEach(id => $(id).addEventListener('change', () => {
+    $('allergyBox').hidden = !ALLERGY_TRIGGERS.some(t => $(t).checked);
+  }));
+}
+
+/* ── 捲動進場 ─────────────────────────────────────── */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold:.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── 送出 ─────────────────────────────────────────── */
+$('rsvpForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const err = $('errBox');
+  const name = $('fName').value.trim();
+  const yes = $('aYes').checked, no = $('aNo').checked;
+
+  if (!name)       { err.textContent = '請留下你的名字。'; $('fName').focus(); return; }
+  if (!yes && !no) { err.textContent = '請選擇是否出席。'; return; }
+  if (yes && !$('fAdults').value) { err.textContent = '請選擇大人人數。'; $('fAdults').focus(); return; }
+  err.textContent = '';
+
+  const p = new URLSearchParams();
+  p.append(FIELD.name,      name);
+  p.append(FIELD.contact,   $('fContact').value.trim());
+  p.append(FIELD.relation,  $('fRelation').value);
+  p.append(FIELD.attending, yes ? ATTEND_YES : ATTEND_NO);
+  p.append(FIELD.message,   $('fMsg').value.trim());
+
+  if (yes) {
+    p.append(FIELD.adults, $('fAdults').value);
+    if ($('fKidsA').value) p.append(FIELD.kidsSeated, $('fKidsA').value);
+    if ($('fKidsB').value) p.append(FIELD.kidsLap,    $('fKidsB').value);
+
+    const picked = [...document.querySelectorAll('#dietChips input:checked')].map(c => c.value);
+    if (CONFIG.allergyOtherEnabled) {
+      const note = $('fAllergy').value.trim();
+      picked.forEach(v => p.append(FIELD.diet, (v === '其他' && note) ? '__other_option__' : v));
+      if (note) p.append(FIELD.diet + '.other_option_response', note);
+    } else {
+      picked.forEach(v => p.append(FIELD.diet, v));
+    }
+  }
+
+  /* 多區段表單必要參數，少了 Google 只會收到第一頁 */
+  p.append('fvv', '1');
+  p.append('pageHistory', '0,1,2');
+  p.append('submit', 'Submit');
+
+  const btn = $('sendBtn');
+  btn.disabled = true; btn.textContent = '送出中⋯';
+
+  try {
+    await fetch(CONFIG.formAction, {
+      method:'POST', mode:'no-cors',
+      headers:{ 'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8' },
+      body:p.toString(),
+    });
+  } catch (e) {
+    btn.disabled = false; btn.textContent = '確認送出　SUBMIT';
+    err.textContent = '送出失敗，請檢查網路後再試一次。';
+    return;
+  }
+
+  $('formBox').hidden = true;
+  $('doneT').textContent = yes ? '收到了' : '謝謝你的祝福';
+  $('doneS').textContent = yes
+    ? '十一月七日，我們留了位子等你。'
+    : '很可惜這次見不到，你的心意我們收下了。';
+  $('doneBox').classList.add('show');
+  $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
+});
+</script>
+</body>
+</html>
