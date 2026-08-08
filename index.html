@@ -32,10 +32,7 @@ const CONFIG = {
   dateEn:  '2026.11.07 (SAT)',
   quote:   '在無數個尋常的日子裡，謝謝你願意陪我把它們過成不尋常。',
 
-  // ── 證婚（30 人上限）──────────────────────────────────
-  // 只有網址帶 ?ceremony=1 的人看得到：
-  //   一般賓客   →  .../index.html
-  //   觀禮 30 位 →  .../index.html?ceremony=1
+  // ── 證婚 ──────────────────────────────────────────────
   ceremony: {
     zh:    '證婚儀式',
     en:    'The Holy Ceremony',
@@ -45,7 +42,7 @@ const CONFIG = {
     time:  '10:00 入場｜10:20 典禮開始',
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
-      { k: '座位', v: '席次有限，敬邀至親觀禮' },
+      { k: '座位', v: '席次有限，將另行邀請至親觀禮' },
       { k: '天氣', v: '戶外場地，遇雨改於室內舉行' },
     ],
   },
@@ -647,11 +644,10 @@ if (CONFIG.heroPhoto) {
   document.head.appendChild(og);
 }
 
-/* ── 資訊卡（?ceremony=1 才顯示證婚）───────────────── */
-const CEREMONY_GUEST = new URLSearchParams(location.search).get('ceremony') === '1';
+/* ── 資訊卡 ────────────────────────────────────────── */
 const cards = [];
-if (CEREMONY_GUEST && CONFIG.ceremony) cards.push(CONFIG.ceremony);
-if (CONFIG.banquet) cards.push(CONFIG.banquet);
+if (CONFIG.ceremony) cards.push(CONFIG.ceremony);
+if (CONFIG.banquet)  cards.push(CONFIG.banquet);
 
 const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">'
           + '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
