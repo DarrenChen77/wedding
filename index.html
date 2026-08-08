@@ -231,8 +231,21 @@ img{ max-width:100%; display:block; }
 .hero--band .hero__names{ color:var(--ink); }
 .hero--band .hero__zh{ color:var(--ink); opacity:.85; }
 .hero__band{
+  position:relative;
   width:100vw; margin-inline:calc(50% - 50vw);
   background-size:cover; background-position:center; background-repeat:no-repeat;
+  /* 上下緣淡出，讓照片化進紙色而不是硬切一塊 */
+  -webkit-mask-image:linear-gradient(to bottom,
+    transparent 0%, rgba(0,0,0,.55) 6%, #000 16%, #000 82%, rgba(0,0,0,.5) 94%, transparent 100%);
+          mask-image:linear-gradient(to bottom,
+    transparent 0%, rgba(0,0,0,.55) 6%, #000 16%, #000 82%, rgba(0,0,0,.5) 94%, transparent 100%);
+}
+/* 暖色薄霧，把畫面的綠拉回整體紙調 */
+.hero__band::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(to bottom,
+    rgba(244,239,230,.30) 0%, rgba(244,239,230,.05) 22%,
+    rgba(244,239,230,.05) 74%, rgba(244,239,230,.34) 100%);
 }
 
 .hero__cue{
