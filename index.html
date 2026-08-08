@@ -70,15 +70,17 @@ const CONFIG = {
   // ── 服裝建議 ──────────────────────────────────────────
   // ← 這三色是照你們婚紗照配的，請換成你們真正想要的；不需要就寫 dressCode: []
   dressCode: [
-    { hex: '#f2ece1', zh: '奶油白', en: 'Cream' },
-    { hex: '#d8cbb4', zh: '燕麥米', en: 'Oatmeal' },
-    { hex: '#9aa89b', zh: '淺灰綠', en: 'Sage' },
+    { hex: '#c9c6c0', zh: '淺灰',   en: 'Light Grey' },
+    { hex: '#ecd6bd', zh: '淺杏色', en: 'Apricot' },
+    { hex: '#d5c7ae', zh: '燕麥米', en: 'Oatmeal' },
   ],
 
   // ── 照片 ──────────────────────────────────────────────
-  heroPhoto: 'photos/hero.jpg',
-  heroFocus: '50% 8%',       // 人物想往下移就把數字調小
-  heroText:  'dark',         // 淺色照片用 dark，深色照片用 light
+  heroPhoto:  'photos/hero.jpg',
+  heroLayout: 'band',        // 'band'＝橫幅照片不裁切（橫圖用）；'cover'＝滿版裁切（直圖用）
+  heroRatio:  '3 / 2',       // band 模式的照片比例，要跟原圖一致才不會變形
+  heroFocus:  '50% 8%',      // cover 模式才會用到
+  heroText:   'dark',        // cover 模式：淺色照片用 dark，深色照片用 light
   gallery:   [],
 
   rsvpDeadline: '10 月 7 日',
@@ -218,6 +220,23 @@ img{ max-width:100%; display:block; }
 .hero--dark .hero__eyebrow{ color:#fff; opacity:.85; }
 .hero--dark .hero__names{ color:#fff; }
 .hero--dark .hero__zh{ color:var(--paper); opacity:.92; }
+
+/* band：橫幅照片完整呈現，一顆氣球都不切 */
+.hero--band{
+  flex-direction:column; justify-content:center; align-items:center;
+  padding:9svh 0 7svh; background:var(--paper);
+}
+.hero--band .hero__bg, .hero--band .hero__veil{ display:none; }
+.hero--band .hero__inner{
+  padding-inline:var(--gut); text-shadow:none; margin-bottom:3.4rem;
+}
+.hero--band .hero__eyebrow{ color:var(--rouge); opacity:1; }
+.hero--band .hero__names{ color:var(--ink); }
+.hero--band .hero__zh{ color:var(--ink); opacity:.85; }
+.hero__band{
+  width:100vw; margin-inline:calc(50% - 50vw);
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+}
 
 .hero__cue{
   position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); z-index:2;
@@ -437,6 +456,7 @@ select{
     </h1>
     <p class="hero__zh" id="dTagZh"></p>
   </div>
+  <div class="hero__band" id="heroBand" hidden></div>
   <div class="hero__cue"></div>
 </header>
 
@@ -606,17 +626,25 @@ $('dDeadline').textContent  = CONFIG.rsvpDeadline;
 $('dFootNames').textContent = `${CONFIG.groom} & ${CONFIG.bride}`;
 if (!CONFIG.quote) $('dQuote').hidden = true;
 
-if (CONFIG.heroPhoto) {
+if (CONFIG.heroPhoto && CONFIG.heroLayout === 'band') {
+  const band = $('heroBand');
+  band.hidden = false;
+  band.style.backgroundImage = `url("${CONFIG.heroPhoto}")`;
+  band.style.aspectRatio     = CONFIG.heroRatio || '3 / 2';
+  $('hero').classList.add('has-photo', 'hero--band');
+} else if (CONFIG.heroPhoto) {
   const bg = $('heroBg');
   bg.style.backgroundImage    = `url("${CONFIG.heroPhoto}")`;
   bg.style.backgroundPosition = CONFIG.heroFocus || 'center';
   bg.style.backgroundRepeat   = 'no-repeat';
   $('hero').classList.add('has-photo', CONFIG.heroText === 'dark' ? 'hero--light' : 'hero--dark');
+} else {
+  $('hero').classList.add('hero--dark');
+}
+if (CONFIG.heroPhoto) {
   const og = document.createElement('meta');
   og.setAttribute('property','og:image'); og.content = CONFIG.heroPhoto;
   document.head.appendChild(og);
-} else {
-  $('hero').classList.add('hero--dark');
 }
 
 /* ── 資訊卡（?ceremony=1 才顯示證婚）───────────────── */
