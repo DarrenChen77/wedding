@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Sacramento&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -43,7 +43,7 @@ const CONFIG = {
   ceremony: {
     zh:    '證婚儀式',
     en:    'The Holy Ceremony',
-    hero:  '10:20 am 典禮開始',
+    hero:  '10:20 典禮開始',
     place: '台北國泰萬怡酒店',
     hall:  '14F 戶外露臺區',
     time:  '10:00 入場｜10:20 典禮開始',
@@ -58,7 +58,7 @@ const CONFIG = {
   banquet: {
     zh:    '午宴',
     en:    'The Wedding Banquet',
-    hero:  '12:30 pm 準時開席',
+    hero:  '12:00 開放入席',
     place: '台北國泰萬怡酒店',
     hall:  '2F 霖苑廳．陳李府喜宴',
     time:  '12:00 入席｜12:30 開席',
@@ -75,7 +75,7 @@ const CONFIG = {
   // ← 這三色是照你們婚紗照配的，請換成你們真正想要的；不需要就寫 dressCode: []
   dressCode: [
     { hex: '#c9c6c0', zh: '淺灰',   en: 'Light Grey' },
-    { hex: '#ecd6bd', zh: '淺杏色', en: 'Apricot' },
+    { hex: '#ecd6bd', zh: '米色', en: 'Beige' },
     { hex: '#d5c7ae', zh: '燕麥米', en: 'Oatmeal' },
   ],
 
@@ -135,7 +135,6 @@ const RELATIONS = [
   --serif-tc: 'Noto Serif TC', 'Songti TC', serif;
   --serif-en: 'Cormorant Garamond', 'Noto Serif TC', serif;
   --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
-  --script:   'Sacramento', 'Snell Roundhand', cursive;   /* 新人名字用的手寫體 */
 
   --col: 34rem;
   --gut: 1.75rem;
@@ -206,13 +205,12 @@ img{ max-width:100%; display:block; }
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.26em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
-/* 手寫體字面比襯線體小、又有上下伸筆畫，所以要放大級數並鬆開行高 */
 .hero__names{
-  font-family:var(--script); font-weight:400;
-  font-size:clamp(3rem,13vw,5.2rem);
-  line-height:1.24; letter-spacing:0; margin:0;
+  font-family:var(--serif-en); font-weight:300;
+  font-size:clamp(2.9rem,13.5vw,4.9rem);
+  line-height:1.08; letter-spacing:.005em; margin:0;
 }
-.hero__names .amp{ font-size:.5em; opacity:.7; padding:0 .1em; }
+.hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
 .hero__zh{
   font-family:var(--serif-tc); font-weight:300;
   font-size:clamp(.86rem,3.6vw,1rem); letter-spacing:.42em;
@@ -309,7 +307,7 @@ img{ max-width:100%; display:block; }
 }
 .card:last-child{ margin-bottom:0; }
 .card__zh{
-  font-family:var(--serif-tc); font-weight:400; font-size:1.15rem;
+  font-family:var(--serif-tc); font-weight:700; font-size:1.15rem;
   letter-spacing:.24em; text-align:center; margin:0; color:var(--ink);
 }
 .card__en{
@@ -317,9 +315,11 @@ img{ max-width:100%; display:block; }
   letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.25rem 0 0;
 }
 .card__hero{
-  font-family:var(--serif-en); font-size:1.85rem; letter-spacing:.05em;
+  font-family:var(--serif-en); font-size:1.55rem; letter-spacing:.05em;
   text-align:center; color:var(--rouge); margin:.9rem 0 1.1rem;
 }
+/* Cormorant 預設是舊體數字、字面又比中文矮，時間段要開 lining 數字並放大才會一樣大 */
+.card__hero-en{ font-size:1.24em; font-variant-numeric:lining-nums tabular-nums; }
 .card__rule{ height:1px; background:var(--wash); margin:0 0 1.15rem; }
 
 /* label／內容兩欄對齊，行距收緊，一屏看得完 */
@@ -456,7 +456,7 @@ select{
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:4rem 0 3.5rem; text-align:center; border-top:1px solid var(--wash); }
-.foot__names{ font-family:var(--script); font-size:2.5rem; line-height:1.3; color:var(--ink); margin:0 0 .5rem; letter-spacing:0; }
+.foot__names{ font-family:var(--serif-en); font-size:1.9rem; color:var(--ink); margin:0 0 .6rem; letter-spacing:.04em; }
 .foot__d{ font-family:var(--sans-tc); font-size:.66rem; letter-spacing:.3em; color:var(--ink-faint); margin:0; }
 
 /* ── 動態 ──────────────────────────────────────────── */
@@ -687,7 +687,7 @@ $('dCards').innerHTML = cards.map(c => `
   <article class="card">
     <h3 class="card__zh">【 ${esc(c.zh)} 】</h3>
     <p class="card__en">${esc(c.en)}</p>
-    <p class="card__hero">${esc(c.hero)}</p>
+    <p class="card__hero">${esc(c.hero).replace(/^([\x20-\x7E]+?)(?=[^\x00-\x7F])/, '<span class="card__hero-en">$1</span>')}</p>
     <div class="card__rule"></div>
     <dl class="card__facts">
       <dt>地點</dt><dd>${esc(c.place)}<span class="card__addr">${esc(c.addr)}</span></dd>
