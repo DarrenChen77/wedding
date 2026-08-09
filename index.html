@@ -49,7 +49,7 @@ const CONFIG = {
     time:  '10:00 入場｜10:20 典禮開始',
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
-      { k: '座位', v: '席次有限，將另行邀請至親觀禮' },
+      { k: '觀禮', v: '若你願意早點到，歡迎一起參與上午的證婚儀式，備有迎賓茶點' },
       { k: '天氣', v: '戶外場地，遇雨改於室內舉行' },
     ],
   },
@@ -241,18 +241,24 @@ img{ max-width:100%; display:block; }
   position:relative;
   width:100vw; margin-inline:calc(50% - 50vw);
   background-size:cover; background-position:center; background-repeat:no-repeat;
-  /* 上下緣淡出，讓照片化進紙色而不是硬切一塊 */
+  /* 上下緣淡出（上緣加深），讓照片化進紙色而不是硬切一塊 */
   -webkit-mask-image:linear-gradient(to bottom,
-    transparent 0%, rgba(0,0,0,.55) 6%, #000 16%, #000 82%, rgba(0,0,0,.5) 94%, transparent 100%);
+    transparent 0%, rgba(0,0,0,.28) 10%, rgba(0,0,0,.72) 19%, #000 26%,
+    #000 78%, rgba(0,0,0,.45) 92%, transparent 100%);
           mask-image:linear-gradient(to bottom,
-    transparent 0%, rgba(0,0,0,.55) 6%, #000 16%, #000 82%, rgba(0,0,0,.5) 94%, transparent 100%);
+    transparent 0%, rgba(0,0,0,.28) 10%, rgba(0,0,0,.72) 19%, #000 26%,
+    #000 78%, rgba(0,0,0,.45) 92%, transparent 100%);
 }
-/* 暖色薄霧，把畫面的綠拉回整體紙調 */
+/* 左右緣用紙色蓋掉（兩側本來就是純紙底，效果同遮罩但便宜很多）＋暖色薄霧把綠拉回紙調 */
 .hero__band::after{
   content:''; position:absolute; inset:0; pointer-events:none;
-  background:linear-gradient(to bottom,
-    rgba(244,239,230,.30) 0%, rgba(244,239,230,.05) 22%,
-    rgba(244,239,230,.05) 74%, rgba(244,239,230,.34) 100%);
+  background:
+    linear-gradient(to right,
+      var(--paper) 0%, rgba(244,239,230,.55) 3%, rgba(244,239,230,0) 9%,
+      rgba(244,239,230,0) 91%, rgba(244,239,230,.55) 97%, var(--paper) 100%),
+    linear-gradient(to bottom,
+      rgba(244,239,230,.34) 0%, rgba(244,239,230,.05) 30%,
+      rgba(244,239,230,.05) 74%, rgba(244,239,230,.34) 100%);
 }
 
 .hero__cue{
@@ -298,7 +304,7 @@ img{ max-width:100%; display:block; }
 /* ── 資訊卡 ────────────────────────────────────────── */
 .card{
   background:var(--card); border:1px solid var(--wash);
-  padding:2.4rem 1.7rem 2rem; margin-bottom:1.6rem;
+  padding:1.9rem 1.5rem 1.6rem; margin-bottom:1.4rem;
 }
 .card:last-child{ margin-bottom:0; }
 .card__zh{
@@ -307,28 +313,41 @@ img{ max-width:100%; display:block; }
 }
 .card__en{
   font-family:var(--serif-en); font-style:italic; font-size:1.05rem;
-  letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.3rem 0 0;
+  letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.25rem 0 0;
 }
 .card__hero{
   font-family:var(--serif-en); font-size:1.85rem; letter-spacing:.05em;
-  text-align:center; color:var(--rouge); margin:1.2rem 0 1.6rem;
+  text-align:center; color:var(--rouge); margin:.9rem 0 1.1rem;
 }
-.card__rule{ height:1px; background:var(--wash); margin:0 0 1.6rem; }
-.card__line{ margin:0 0 .7rem; font-size:.98rem; line-height:1.95; }
-.card__line b{
-  font-family:var(--sans-tc); font-size:.78rem; font-weight:500;
-  letter-spacing:.16em; color:var(--ink-faint); margin-right:.55rem;
+.card__rule{ height:1px; background:var(--wash); margin:0 0 1.15rem; }
+
+/* label／內容兩欄對齊，行距收緊，一屏看得完 */
+.card__facts{
+  display:grid; grid-template-columns:auto 1fr;
+  column-gap:.85rem; row-gap:.5rem; align-items:baseline; margin:0;
 }
-.card__notes{ margin-top:1.5rem; padding-top:1.3rem; border-top:1px dashed var(--wash); }
-.card__notes p{ margin:0 0 .5rem; font-size:.88rem; color:var(--ink-soft); line-height:1.9; }
-.card__notes p:last-child{ margin-bottom:0; }
-.card__notes b{
-  font-family:var(--sans-tc); font-size:.72rem; font-weight:500;
-  letter-spacing:.16em; color:var(--rouge); margin-right:.5rem;
+.card__facts dt{
+  font-family:var(--sans-tc); font-size:.76rem; font-weight:500;
+  letter-spacing:.14em; color:var(--ink-faint); line-height:1.7;
 }
+.card__facts dd{ margin:0; font-size:.96rem; line-height:1.7; }
+.card__addr{
+  display:block; margin-top:.05rem;
+  font-size:.83rem; letter-spacing:.06em; color:var(--ink-soft);
+}
+.card__notes{
+  margin-top:1.2rem; padding-top:1rem; border-top:1px dashed var(--wash);
+  display:grid; grid-template-columns:auto 1fr;
+  column-gap:.8rem; row-gap:.35rem; align-items:baseline;
+}
+.card__notes dt{
+  font-family:var(--sans-tc); font-size:.71rem; font-weight:500;
+  letter-spacing:.14em; color:var(--rouge); line-height:1.7;
+}
+.card__notes dd{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.7; }
 .mapbtn{
   display:flex; align-items:center; justify-content:center; gap:.55rem;
-  margin-top:1.5rem; padding:.85rem 1.2rem;
+  margin-top:1.2rem; padding:.72rem 1.2rem;
   font-family:var(--sans-tc); font-size:.76rem; letter-spacing:.18em;
   color:var(--ink); text-decoration:none;
   border:1px solid var(--ink); background:transparent;
@@ -674,14 +693,15 @@ $('dCards').innerHTML = cards.map(c => `
     <p class="card__en">${esc(c.en)}</p>
     <p class="card__hero">${esc(c.hero)}</p>
     <div class="card__rule"></div>
-    <p class="card__line"><b>地點</b>${esc(c.place)}</p>
-    ${c.hall ? `<p class="card__line"><b>廳別</b>${esc(c.hall)}</p>` : ''}
-    <p class="card__line"><b>時間</b>${esc(c.time)}</p>
-    <p class="card__line"><b>地址</b>${esc(c.addr)}</p>
+    <dl class="card__facts">
+      <dt>地點</dt><dd>${esc(c.place)}<span class="card__addr">${esc(c.addr)}</span></dd>
+      ${c.hall ? `<dt>廳別</dt><dd>${esc(c.hall)}</dd>` : ''}
+      <dt>時間</dt><dd>${esc(c.time)}</dd>
+    </dl>
     ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　TRANSPORTATION</a>` : ''}
-    ${c.notes && c.notes.length ? `<div class="card__notes">
-      ${c.notes.map(n => `<p><b>${esc(n.k)}</b>${esc(n.v)}</p>`).join('')}
-    </div>` : ''}
+    ${c.notes && c.notes.length ? `<dl class="card__notes">
+      ${c.notes.map(n => `<dt>${esc(n.k)}</dt><dd>${esc(n.v)}</dd>`).join('')}
+    </dl>` : ''}
   </article>`).join('');
 
 /* ── 服裝建議 ─────────────────────────────────────── */
