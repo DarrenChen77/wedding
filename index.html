@@ -14,12 +14,12 @@
 <meta property="og:url" content="https://darrenchen77.github.io/wedding/">
 <meta property="og:image" content="https://darrenchen77.github.io/wedding/photos/hero.jpg">
 <meta property="og:image:width" content="2000">
-<meta property="og:image:height" content="1333">
+<meta property="og:image:height" content="1332">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Oleo+Script:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -85,7 +85,7 @@ const CONFIG = {
   // ── 照片 ──────────────────────────────────────────────
   heroPhoto:  'photos/hero.jpg',
   heroLayout: 'band',        // 'band'＝橫幅照片不裁切（橫圖用）；'cover'＝滿版裁切（直圖用）
-  heroRatio:  '3 / 2',       // band 模式的照片比例，要跟原圖一致才不會變形
+  heroRatio:  '2000 / 1332', // band 模式的照片比例，要跟原圖一致才不會變形
   heroFocus:  '50% 8%',      // cover 模式才會用到
   heroText:   'dark',        // cover 模式：淺色照片用 dark，深色照片用 light
   gallery:   [],
@@ -135,7 +135,6 @@ const RELATIONS = ['男方親友', '女方親友', '共同親友'];
   --serif-tc: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
   --serif-en: 'Cormorant Garamond', 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
   --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
-  --script:   'Oleo Script', 'Cormorant Garamond', cursive;   /* 新人名字 */
 
   --col: 34rem;
   --gut: 1.75rem;
@@ -205,11 +204,10 @@ img{ max-width:100%; display:block; }
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.2em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
-/* Oleo Script 字面偏小、又有下伸筆畫，級數要放大、行高要鬆 */
 .hero__names{
-  font-family:var(--script); font-weight:400; font-style:italic;
-  font-size:clamp(2.7rem,12.4vw,4.8rem);
-  line-height:1.22; letter-spacing:0; margin:0;
+  font-family:var(--serif-en); font-weight:400; font-style:italic;
+  font-size:clamp(2.9rem,13.5vw,4.9rem);
+  line-height:1.12; letter-spacing:.005em; margin:0;
 }
 .hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
 .hero__zh{
@@ -493,10 +491,9 @@ select{
 .done__s{ font-size:.92rem; color:var(--ink-soft); margin:0; line-height:1.95; }
 
 /* ── 結尾 ──────────────────────────────────────────── */
-.outro{ padding:3.4rem 0 .6rem; }
-.outro .introfig{ margin-top:0; }
 .foot{ padding:2.6rem 0 3.5rem; text-align:center; }
-/* 中文名：Oleo Script 沒有中文字形，這裡要用中文黑體並重配級數 */
+.foot__logo{ width:9.5rem; height:auto; margin:1.6rem auto 0; opacity:.85; }
+/* 頁尾中文署名 */
 .foot__names{
   font-family:var(--serif-tc); font-weight:500; font-size:1.7rem;
   line-height:1.4; color:var(--ink); margin:0 0 .6rem;
@@ -699,18 +696,12 @@ select{
   </div>
 </section>
 
-<!-- ═══ 結尾照片 ═══ -->
-<section class="wrap outro reveal">
-  <figure class="introfig">
-    <img src="photos/outro.jpg" width="1400" height="871" loading="lazy" decoding="async"
-         alt="Darren 與 Hanne 的婚紗照">
-  </figure>
-</section>
-
 <!-- ═══ 結尾 ═══ -->
 <footer class="foot">
   <p class="foot__names" id="dFootNames"></p>
   <p class="foot__msg">邀請您一起在國泰萬怡相聚♡</p>
+  <img class="foot__logo" src="photos/venue-logo.png" width="399" height="225"
+       loading="lazy" decoding="async" alt="台北國泰萬怡酒店 Courtyard by Marriott Taipei Downtown">
 </footer>
 
 <script>
