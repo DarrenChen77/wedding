@@ -230,7 +230,7 @@ img{ max-width:100%; display:block; }
 }
 .hero--band .hero__eyebrow{ color:var(--rouge); opacity:1; }
 .hero--band .hero__names{ color:var(--ink); }
-.hero--band .hero__zh{ color:var(--ink); opacity:.85; }
+.hero--band .hero__zh{ color:var(--ink-soft); opacity:1; }   /* 與倒數區的引言同色 */
 .hero__band{
   position:relative;
   width:100vw; margin-inline:calc(50% - 50vw);
@@ -367,8 +367,9 @@ img{ max-width:100%; display:block; }
 .swatches{ display:flex; justify-content:center; gap:1.6rem; flex-wrap:wrap; }
 .sw{ text-align:center; }
 .sw__dot{
-  width:4.2rem; height:4.2rem; border-radius:50%;
-  border:1px solid var(--wash); margin:0 auto .8rem;
+  display:block; width:4.2rem; height:auto;
+  color:var(--wash);   /* 給 SVG 的 stroke 用 */
+  margin:0 auto .8rem;
 }
 .sw__zh{ margin:0; font-size:.92rem; letter-spacing:.12em; }
 .sw__en{
@@ -490,7 +491,7 @@ select{
   :root{ --gut:1.35rem; }
   .grid2{ grid-template-columns:1fr; gap:1.6rem; }
   .swatches{ gap:1.1rem; }
-  .sw__dot{ width:3.6rem; height:3.6rem; }
+  .sw__dot{ width:3.6rem; }
 }
 </style>
 </head>
@@ -746,11 +747,14 @@ $('dCards').innerHTML = cards.map(c => `
   </article>`).join('');
 
 /* ── 服裝建議 ─────────────────────────────────────── */
+/* 愛心外框：色票很淡，沒有描邊會看不見，所以用 SVG 才能同時有形狀和外框 */
+const HEART = 'M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4'
+            + 'c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z';
 if (CONFIG.dressCode && CONFIG.dressCode.length) {
   $('secDress').hidden = false;
   $('dSwatches').innerHTML = CONFIG.dressCode.map(c => `
     <div class="sw">
-      <div class="sw__dot" style="background:${esc(c.hex)}"></div>
+      <svg class="sw__dot" viewBox="0 0 32 29.6" aria-hidden="true"><path d="${HEART}" fill="${esc(c.hex)}" stroke="currentColor" stroke-width=".6"/></svg>
       <p class="sw__zh">${esc(c.zh)}</p>
       <p class="sw__en">${esc(c.en)}</p>
     </div>`).join('');
