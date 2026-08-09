@@ -42,6 +42,13 @@ const CONFIG = {
   dateEn:  '2026.11.07 (六)',
   quote:   '親愛的家人朋友們，期待與您相聚，共同見證我們人生中重要的一天。',
 
+  // ── 關於我們 ──────────────────────────────────────────
+  about: {
+    groom: { photo:'photos/groom.jpg', en:'The Groom', zh:'新郎　陳奕錩' },
+    bride: { photo:'photos/bride.jpg', en:'The Bride', zh:'新娘　李芝儀' },
+  },
+
+
   // ── 證婚 ──────────────────────────────────────────────
   ceremony: {
     zh:    '證婚儀式',
@@ -211,9 +218,11 @@ img{ max-width:100%; display:block; }
   font-size:clamp(2.7rem,12.4vw,4.8rem);
   line-height:1.22; letter-spacing:0; margin:0;
 }
+/* ＆ 用上方標語的同一個酒紅，不能留 opacity 否則紅色會被洗淡 */
 .hero__names .amp{
   font-family:'Oleo Script', cursive; font-style:normal;
-  font-size:.5em; opacity:.7; padding:0 .1em;
+  font-size:.5em; padding:0 .1em;
+  color:var(--rouge); opacity:1;
 }
 .hero__zh{
   font-family:var(--serif-tc); font-weight:700;
@@ -237,7 +246,7 @@ img{ max-width:100%; display:block; }
 .hero--band + .sec{ padding-top:2.6rem; }      /* 緊接封面的區塊不用再留大片空白 */
 .hero--band .hero__bg, .hero--band .hero__veil{ display:none; }
 .hero--band .hero__inner{
-  padding-inline:var(--gut); text-shadow:none; margin-bottom:3.4rem;
+  padding-inline:var(--gut); text-shadow:none; margin-bottom:1.9rem;
 }
 .hero--band .hero__eyebrow{ color:var(--rouge); opacity:1; }
 .hero--band .hero__names{ color:#6f6a63; }   /* 比主文字色再淺一階的中灰 */
@@ -246,24 +255,16 @@ img{ max-width:100%; display:block; }
   position:relative;
   width:100vw; margin-inline:calc(50% - 50vw);
   background-size:cover; background-position:center; background-repeat:no-repeat;
-  /* 上下緣淡出（上緣加深），讓照片化進紙色而不是硬切一塊 */
-  -webkit-mask-image:linear-gradient(to bottom,
-    transparent 0%, rgba(0,0,0,.28) 10%, rgba(0,0,0,.72) 19%, #000 26%,
-    #000 78%, rgba(0,0,0,.45) 92%, transparent 100%);
-          mask-image:linear-gradient(to bottom,
-    transparent 0%, rgba(0,0,0,.28) 10%, rgba(0,0,0,.72) 19%, #000 26%,
-    #000 78%, rgba(0,0,0,.45) 92%, transparent 100%);
+  /* 柔邊做法與下方婚紗照 (.introfig) 完全相同：不用 mask，四邊各 10% 用紙色化開 */
 }
 /* 左右緣用紙色蓋掉（兩側本來就是純紙底，效果同遮罩但便宜很多）＋暖色薄霧把綠拉回紙調 */
 .hero__band::after{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    linear-gradient(to right,
-      var(--paper) 0%, rgba(247,238,237,.55) 3%, rgba(247,238,237,0) 9%,
-      rgba(247,238,237,0) 91%, rgba(247,238,237,.55) 97%, var(--paper) 100%),
-    linear-gradient(to bottom,
-      rgba(247,238,237,.34) 0%, rgba(247,238,237,.05) 30%,
-      rgba(247,238,237,.05) 74%, rgba(247,238,237,.34) 100%);
+    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 10%,
+                               rgba(247,238,237,0) 90%, var(--paper) 100%),
+    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 10%,
+                               rgba(247,238,237,0) 90%, var(--paper) 100%);
 }
 
 .hero__cue{
@@ -500,15 +501,13 @@ select{
   transition:border-color .25s ease, color .25s ease;
 }
 .redo:hover{ border-color:var(--ink-soft); color:var(--ink); }
-.rsvp__hint{
-  text-align:center; font-size:.8rem; color:var(--ink-faint);
-  margin:-2.2rem 0 2.6rem; letter-spacing:.06em;
-}
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:2.6rem 0 2rem; text-align:center; }
 .bottomfig-wrap{ padding:.6rem 0 2.4rem; }
 .bottomfig-wrap .introfig{ margin-top:0; }
+/* 緊接封面照，中間不另外留空 */
+.topfig-wrap .introfig{ margin-top:0; }
 /* 頁尾中文署名 */
 .foot__names{
   font-family:var(--serif-tc); font-weight:500; font-size:1.7rem;
@@ -540,6 +539,38 @@ select{
   .swatches{ gap:1.1rem; }
   .sw__dot{ width:3.6rem; height:3.6rem; }
 }
+
+/* ── 關於我們 ─────────────────────────────────────────── */
+/* 三欄 grid：第一列放兩張圓照＋中間愛心，第二列放名字。
+   愛心用 align-items:center 對齊照片列，就會剛好落在圓心高度。 */
+.about{
+  display:grid; grid-template-columns:1fr auto 1fr;
+  column-gap:clamp(.5rem, 3.2vw, 1.6rem); row-gap:1.05rem;
+  align-items:center; justify-items:center;
+  max-width:520px; margin:2.1rem auto 0;
+}
+/* height:auto 必須寫，否則 <img height="600"> 會壓過 aspect-ratio 變成橢圓 */
+.about__img{
+  display:block; width:100%; height:auto; aspect-ratio:1;
+  object-fit:cover; border-radius:50%;
+  box-shadow:0 3px 16px rgba(74,68,61,.10);
+}
+.about__cap{ text-align:center; }
+.about__en{
+  display:block; font-family:var(--serif-en); font-weight:600;
+  font-size:1.04rem; letter-spacing:.09em; color:var(--rouge);
+}
+.about__zh{
+  display:block; margin-top:.32rem;
+  font-size:1.12rem; font-weight:500; letter-spacing:.06em; color:var(--ink);
+}
+/* 愛心對齊圓形照片的中心，不跟著下面的文字掉下去 */
+.about__heart{
+  flex:0 0 auto; align-self:flex-start; margin:0;
+  color:var(--rouge); font-size:1.45rem; line-height:1;
+  padding-top:calc(min(238px, 30vw) / 2 - .7rem);
+}
+
 </style>
 </head>
 <body>
@@ -559,6 +590,14 @@ select{
   <div class="hero__cue"></div>
 </header>
 
+<!-- ═══ 封面下方的婚紗合照 ═══ -->
+<section class="wrap topfig-wrap reveal">
+  <figure class="introfig">
+    <img src="photos/intro.jpg" width="1400" height="873" loading="lazy" decoding="async"
+         alt="Darren 與 Hanne 的婚紗照">
+  </figure>
+</section>
+
 <!-- ═══ 倒數 ═══ -->
 <section class="sec reveal">
   <div class="wrap">
@@ -574,10 +613,7 @@ select{
     </div>
     <p class="count__date" id="dDateEn"></p>
     <p class="quote" id="dQuote"></p>
-    <figure class="introfig">
-      <img src="photos/intro.jpg" width="1400" height="873" loading="lazy" decoding="async"
-           alt="Darren 與 Hanne 的婚紗照">
-    </figure>
+    <div class="about" id="dAbout"></div>
   </div>
 </section>
 
@@ -621,7 +657,6 @@ select{
 
     <div id="formBox">
       <p class="rsvp__sub">為了幫您留好位子，請在 <b id="dDeadline"></b> 前填寫完</p>
-      <p class="rsvp__hint">送出後如需修改，再填一次即可，以最後一次為準</p>
 
       <form id="rsvpForm" novalidate>
         <div class="f">
@@ -631,7 +666,7 @@ select{
 
         <div class="f">
           <label for="fContact">手機號碼<span class="en">MOBILE</span></label>
-          <input type="tel" id="fContact" autocomplete="tel" inputmode="tel" placeholder="09xx-xxx-xxx">
+          <input type="tel" id="fContact" autocomplete="tel" inputmode="tel" placeholder="請輸入手機">
         </div>
 
         <div class="f">
@@ -761,6 +796,20 @@ $('dQuote').innerHTML = (CONFIG.quote || '').split('，')
 $('dDeadline').textContent  = CONFIG.rsvpDeadline;
 $('dFootNames').textContent = `${CONFIG.groomZh}＆${CONFIG.brideZh}`;
 if (!CONFIG.quote) $('dQuote').hidden = true;
+
+/* 關於我們：兩張圓形照中間夾一顆愛心 */
+{
+  const A  = [CONFIG.about.groom, CONFIG.about.bride];
+  const im = p => `<img class="about__img" src="${esc(p.photo)}" width="600" height="600"
+                        loading="lazy" decoding="async" alt="${esc(p.zh)}">`;
+  const ca = p => `<div class="about__cap">
+                     <span class="about__en">${esc(p.en)}</span>
+                     <span class="about__zh">${esc(p.zh)}</span>
+                   </div>`;
+  $('dAbout').innerHTML =
+    im(A[0]) + '<p class="about__heart" aria-hidden="true">♥</p>' + im(A[1]) +
+    ca(A[0]) + '<span></span>' + ca(A[1]);
+}
 
 if (CONFIG.heroPhoto && CONFIG.heroLayout === 'band') {
   const band = $('heroBand');
@@ -944,6 +993,7 @@ $('redoBtn').addEventListener('click', () => {
   $('errBox').textContent = '';
   $('rsvpForm').scrollIntoView({ behavior:'smooth', block:'start' });
 });
+
 </script>
 </body>
 </html>
