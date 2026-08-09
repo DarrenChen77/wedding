@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Oleo+Script:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -132,6 +132,7 @@ const RELATIONS = ['男方親友', '女方親友', '共同親友'];
   --serif-tc: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
   --serif-en: 'Cormorant Garamond', 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
   --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
+  --script:   'Oleo Script', 'Cormorant Garamond', cursive;   /* 新人名字 */
 
   --col: 34rem;
   --gut: 1.75rem;
@@ -201,10 +202,11 @@ img{ max-width:100%; display:block; }
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.2em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
+/* Oleo Script 字面偏小、又有下伸筆畫，級數要放大、行高要鬆 */
 .hero__names{
-  font-family:var(--serif-en); font-weight:300;
-  font-size:clamp(2.9rem,13.5vw,4.9rem);
-  line-height:1.08; letter-spacing:.005em; margin:0;
+  font-family:var(--script); font-weight:400;
+  font-size:clamp(2.7rem,12.4vw,4.8rem);
+  line-height:1.22; letter-spacing:0; margin:0;
 }
 .hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
 .hero__zh{
@@ -471,7 +473,7 @@ select{
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:4rem 0 3.5rem; text-align:center; border-top:1px solid var(--wash); }
-.foot__names{ font-family:var(--serif-en); font-size:1.9rem; color:var(--ink); margin:0 0 .6rem; letter-spacing:.04em; }
+.foot__names{ font-family:var(--script); font-size:2.3rem; line-height:1.3; color:var(--ink); margin:0 0 .5rem; letter-spacing:0; }
 .foot__d{ font-family:var(--sans-tc); font-size:.66rem; letter-spacing:.3em; color:var(--ink-faint); margin:0; }
 
 /* ── 動態 ──────────────────────────────────────────── */
