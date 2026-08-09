@@ -46,7 +46,7 @@ const CONFIG = {
     hero:  '10:00 開放入場',
     place: '台北國泰萬怡酒店',
     hall:  '14F 戶外露臺區',
-    time:  '10:00 入場｜10:20 典禮開始',
+    time:  '10:00 入場｜10:20 證婚開始',
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
       { k: '觀禮', v: '上午證婚儀式備有迎賓茶點' },
@@ -109,11 +109,7 @@ const ATTEND_YES = '是，我會出席';
 const ATTEND_NO  = '抱歉無法出席，獻上祝福';
 
 /* 與新人關係：送進 Google 表單的就是這些字，可自由增刪 */
-const RELATIONS = [
-  '男方家人親戚', '男方同事長官', '男方同學好友',
-  '女方家人親戚', '女方同事長官', '女方同學好友',
-  '雙方共同朋友', '其他',
-];
+const RELATIONS = ['男方親友', '女方親友', '共同親友'];
 </script>
 
 <style>
@@ -328,7 +324,7 @@ img{ max-width:100%; display:block; }
   letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.3rem 0 0;
 }
 .card__hero{
-  font-family:var(--serif-en); font-size:1.55rem; letter-spacing:.05em;
+  font-family:var(--serif-en); font-size:1.3rem; letter-spacing:.05em;
   text-align:center; color:var(--rouge); margin:.9rem 0 1.1rem;
 }
 /* Cormorant 預設是舊體數字、字面又比中文矮，時間段要開 lining 數字並放大才會一樣大 */
@@ -345,6 +341,7 @@ img{ max-width:100%; display:block; }
   letter-spacing:.14em; color:var(--ink-faint); line-height:1.7;
 }
 .card__facts dd{ margin:0; font-size:.96rem; line-height:1.7; text-wrap:pretty; }
+.card__facts dd.is-time{ font-weight:700; }   /* 時間是最關鍵的一列 */
 .card__addr{
   display:block; margin-top:.05rem;
   font-size:.83rem; letter-spacing:.06em; color:var(--ink-soft);
@@ -719,7 +716,7 @@ $('dCards').innerHTML = cards.map(c => `
     <dl class="card__facts">
       <dt>地點</dt><dd>${esc(c.place)}<span class="card__addr">${esc(c.addr)}</span></dd>
       ${c.hall ? `<dt>廳別</dt><dd>${esc(c.hall)}</dd>` : ''}
-      <dt>時間</dt><dd>${nbClauses(c.time)}</dd>
+      <dt>時間</dt><dd class="is-time">${nbClauses(c.time)}</dd>
     </dl>
     ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　Google Maps</a>` : ''}
     ${c.notes && c.notes.length ? `<dl class="card__notes">
