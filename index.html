@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Sacramento&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -43,7 +43,7 @@ const CONFIG = {
   ceremony: {
     zh:    '證婚儀式',
     en:    'The Holy Ceremony',
-    hero:  '10:20 AM 典禮開始',
+    hero:  '10:20 am 典禮開始',
     place: '台北國泰萬怡酒店',
     hall:  '14F 戶外露臺區',
     time:  '10:00 入場｜10:20 典禮開始',
@@ -58,7 +58,7 @@ const CONFIG = {
   banquet: {
     zh:    '午宴',
     en:    'The Wedding Banquet',
-    hero:  '12:30 PM 準時開席',
+    hero:  '12:30 pm 準時開席',
     place: '台北國泰萬怡酒店',
     hall:  '2F 霖苑廳．陳李府喜宴',
     time:  '12:00 入席｜12:30 開席',
@@ -135,6 +135,7 @@ const RELATIONS = [
   --serif-tc: 'Noto Serif TC', 'Songti TC', serif;
   --serif-en: 'Cormorant Garamond', 'Noto Serif TC', serif;
   --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
+  --script:   'Sacramento', 'Snell Roundhand', cursive;   /* 新人名字用的手寫體 */
 
   --col: 34rem;
   --gut: 1.75rem;
@@ -205,12 +206,13 @@ img{ max-width:100%; display:block; }
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.26em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
+/* 手寫體字面比襯線體小、又有上下伸筆畫，所以要放大級數並鬆開行高 */
 .hero__names{
-  font-family:var(--serif-en); font-weight:300;
-  font-size:clamp(2.9rem,13.5vw,4.9rem);
-  line-height:1.08; letter-spacing:.005em; margin:0;
+  font-family:var(--script); font-weight:400;
+  font-size:clamp(3rem,13vw,5.2rem);
+  line-height:1.24; letter-spacing:0; margin:0;
 }
-.hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
+.hero__names .amp{ font-size:.5em; opacity:.7; padding:0 .1em; }
 .hero__zh{
   font-family:var(--serif-tc); font-weight:300;
   font-size:clamp(.86rem,3.6vw,1rem); letter-spacing:.42em;
@@ -454,7 +456,7 @@ select{
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:4rem 0 3.5rem; text-align:center; border-top:1px solid var(--wash); }
-.foot__names{ font-family:var(--serif-en); font-size:1.9rem; color:var(--ink); margin:0 0 .6rem; letter-spacing:.04em; }
+.foot__names{ font-family:var(--script); font-size:2.5rem; line-height:1.3; color:var(--ink); margin:0 0 .5rem; letter-spacing:0; }
 .foot__d{ font-family:var(--sans-tc); font-size:.66rem; letter-spacing:.3em; color:var(--ink-faint); margin:0; }
 
 /* ── 動態 ──────────────────────────────────────────── */
