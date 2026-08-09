@@ -65,7 +65,7 @@ const CONFIG = {
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
       { k: '捷運', v: '行天宮站 2 號出口，步行約 8 分鐘' },
-      { k: '停車', v: '飯店 B3–B4 停車場，賓客免費' },
+      { k: '停車', v: '飯店 B3–B4 停車場，賓客免費停車' },
     ],
   },
 
@@ -121,9 +121,9 @@ const RELATIONS = [
    ② 設計語彙 — 宣紙、墨、胭脂
    ═══════════════════════════════════════════════════════════════ */
 :root{
-  --paper:      #f7f2ec;   /* 主色：米白 */
-  --paper-2:    #ece3d7;   /* 間隔色：較深的米 */
-  --card:       #fbf7f3;
+  --paper:      #f7eeed;   /* 主色：Snow */
+  --paper-2:    #eee1df;   /* 間隔色：同色相加深一階 */
+  --card:       #fdf8f7;   /* 卡片：比主色再亮一階才浮得起來 */
   --wash:       #ded4c4;
   --ink:        #2a2724;
   --ink-soft:   #635c53;
@@ -192,8 +192,8 @@ img{ max-width:100%; display:block; }
 .hero__veil{ position:absolute; inset:0; z-index:1; }
 .hero--light .hero__veil{
   background:linear-gradient(to bottom,
-    rgba(251,247,243,.30) 0%, rgba(251,247,243,0) 22%,
-    rgba(247,242,236,.55) 52%, rgba(247,242,236,.93) 72%, var(--paper) 88%);
+    rgba(253,248,247,.30) 0%, rgba(253,248,247,0) 22%,
+    rgba(247,238,237,.55) 52%, rgba(247,238,237,.93) 72%, var(--paper) 88%);
 }
 .hero--dark .hero__veil{
   background:linear-gradient(to bottom,
@@ -201,13 +201,13 @@ img{ max-width:100%; display:block; }
     rgba(18,16,13,.30) 70%, rgba(18,16,13,.85) 100%);
 }
 .hero__inner{ position:relative; z-index:2; width:100%; max-width:var(--col); text-align:center; }
-.hero--light .hero__inner{ text-shadow:0 1px 20px rgba(251,247,243,.92); }
+.hero--light .hero__inner{ text-shadow:0 1px 20px rgba(253,248,247,.92); }
 .hero--dark  .hero__inner{ text-shadow:0 1px 26px rgba(12,10,8,.8); }
 
 .hero__eyebrow{
-  font-family:var(--serif-en); font-style:italic; font-weight:400;
-  font-size:clamp(.72rem,3.1vw,.88rem); letter-spacing:.26em;
-  text-transform:uppercase; margin:0 0 1.1rem; padding-left:.26em;
+  font-family:var(--serif-en); font-style:italic; font-weight:600;
+  font-size:clamp(.88rem,3.9vw,1.1rem); letter-spacing:.2em;
+  text-transform:uppercase; margin:0 0 1.1rem; padding-left:.2em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
 .hero__names{
@@ -217,7 +217,7 @@ img{ max-width:100%; display:block; }
 }
 .hero__names .amp{ font-size:.44em; opacity:.7; padding:0 .14em; }
 .hero__zh{
-  font-family:var(--serif-tc); font-weight:300;
+  font-family:var(--serif-tc); font-weight:700;
   font-size:clamp(.86rem,3.6vw,1rem); letter-spacing:.42em;
   margin:1.5rem 0 0; padding-left:.42em;
 }
@@ -257,11 +257,11 @@ img{ max-width:100%; display:block; }
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
     linear-gradient(to right,
-      var(--paper) 0%, rgba(247,242,236,.55) 3%, rgba(247,242,236,0) 9%,
-      rgba(247,242,236,0) 91%, rgba(247,242,236,.55) 97%, var(--paper) 100%),
+      var(--paper) 0%, rgba(247,238,237,.55) 3%, rgba(247,238,237,0) 9%,
+      rgba(247,238,237,0) 91%, rgba(247,238,237,.55) 97%, var(--paper) 100%),
     linear-gradient(to bottom,
-      rgba(247,242,236,.34) 0%, rgba(247,242,236,.05) 30%,
-      rgba(247,242,236,.05) 74%, rgba(247,242,236,.34) 100%);
+      rgba(247,238,237,.34) 0%, rgba(247,238,237,.05) 30%,
+      rgba(247,238,237,.05) 74%, rgba(247,238,237,.34) 100%);
 }
 
 .hero__cue{
@@ -269,7 +269,7 @@ img{ max-width:100%; display:block; }
   width:1px; height:2.4rem; animation:cue 2.6s ease-in-out infinite;
   background:linear-gradient(to bottom,transparent,rgba(42,39,36,.5));
 }
-.hero--dark .hero__cue{ background:linear-gradient(to bottom,transparent,rgba(247,242,236,.7)); }
+.hero--dark .hero__cue{ background:linear-gradient(to bottom,transparent,rgba(247,238,237,.7)); }
 @keyframes cue{ 0%,100%{opacity:.25;transform:translateX(-50%) scaleY(.6);} 50%{opacity:1;transform:translateX(-50%) scaleY(1);} }
 
 /* ── 倒數 ──────────────────────────────────────────── */
@@ -306,7 +306,7 @@ img{ max-width:100%; display:block; }
 }
 .count__date .cjk-fit{ font-size:.76em; }
 .quote{
-  text-align:center; margin:1.6rem auto 0; max-width:26rem;
+  text-align:center; margin:1.6rem auto 0; max-width:26rem; font-weight:700;
   font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
 }
 .nb{ white-space:nowrap; }   /* 句內不斷行，讓折行只落在逗號處 */
