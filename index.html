@@ -121,7 +121,7 @@ const RELATIONS = ['男方親友', '女方親友', '共同親友'];
   --paper-2:    #eee1df;   /* 間隔色：同色相加深一階 */
   --card:       #fdf8f7;   /* 卡片：比主色再亮一階才浮得起來 */
   --wash:       #ded4c4;
-  --ink:        #2a2724;
+  --ink:        #4a443d;   /* 深灰，不用純黑 */
   --ink-soft:   #635c53;
   --ink-faint:  #6a6259;
   --ink-ghost:  #a49a8d;
@@ -224,8 +224,10 @@ img{ max-width:100%; display:block; }
 /* band：橫幅照片完整呈現，一顆氣球都不切 */
 .hero--band{
   flex-direction:column; justify-content:center; align-items:center;
-  padding:9svh 0 7svh; background:var(--paper);
+  padding:9svh 0 2svh; background:var(--paper);
 }
+.hero--band .hero__cue{ display:none; }        /* band 版面照片就在下方，不需要捲動提示 */
+.hero--band + .sec{ padding-top:2.6rem; }      /* 緊接封面的區塊不用再留大片空白 */
 .hero--band .hero__bg, .hero--band .hero__veil{ display:none; }
 .hero--band .hero__inner{
   padding-inline:var(--gut); text-shadow:none; margin-bottom:3.4rem;
@@ -303,9 +305,17 @@ img{ max-width:100%; display:block; }
   font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
 }
 .nb{ white-space:nowrap; }   /* 句內不斷行，讓折行只落在逗號處 */
-/* 引言下方的婚紗照 */
-.introfig{ margin:2.6rem 0 0; }
-.introfig img{ width:100%; height:auto; }
+/* 引言下方的婚紗照：四邊用紙色柔化，不要硬邊 */
+.introfig{ position:relative; margin:2.6rem 0 0; }
+.introfig img{ width:100%; height:auto; display:block; }
+.introfig::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 13%,
+                               rgba(247,238,237,0) 87%, var(--paper) 100%),
+    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 13%,
+                               rgba(247,238,237,0) 87%, var(--paper) 100%);
+}
 
 .quote::before{ content:'「'; color:var(--wash); }
 .quote::after{ content:'」'; color:var(--wash); }
