@@ -32,7 +32,7 @@ const CONFIG = {
 
   // ── 封面標語 ──────────────────────────────────────────
   taglineEn: 'You are my greatest adventure.',
-  taglineZh: '遇見你，是我此生最美的冒險',
+  taglineZh: '遇見你，是人生最美好的安排',
 
   // ── 日期 ──────────────────────────────────────────────
   dateISO: '2026-11-07T12:30:00+08:00',   // 倒數基準＝開席
@@ -91,9 +91,6 @@ const CONFIG = {
 
   // ── Google 表單 ───────────────────────────────────────
   formAction: 'https://docs.google.com/forms/d/e/1FAIpQLScymXjE1Sb7hlwOMKhHqX7xtmTvEcSo_Dxl8wzLGzArqOOgCg/formResponse',
-
-  // 表單那題按了 Google 內建的「新增『其他』」之後改成 true
-  allergyOtherEnabled: false,
 };
 
 /* 表單欄位代號 — 從你的表單抓好的，不用動 */
@@ -129,8 +126,8 @@ const RELATIONS = [
   --card:       #faf7f1;
   --wash:       #ded4c4;
   --ink:        #2a2724;
-  --ink-soft:   #6f675e;
-  --ink-faint:  #756d60;
+  --ink-soft:   #635c53;
+  --ink-faint:  #6a6259;
   --ink-ghost:  #a49a8d;
   --rouge:      #9c4f4a;
   --sage-deep:  #5f7a6f;
@@ -331,7 +328,7 @@ img{ max-width:100%; display:block; }
   font-family:var(--sans-tc); font-size:.76rem; font-weight:500;
   letter-spacing:.14em; color:var(--ink-faint); line-height:1.7;
 }
-.card__facts dd{ margin:0; font-size:.96rem; line-height:1.7; }
+.card__facts dd{ margin:0; font-size:.96rem; line-height:1.7; text-wrap:pretty; }
 .card__addr{
   display:block; margin-top:.05rem;
   font-size:.83rem; letter-spacing:.06em; color:var(--ink-soft);
@@ -345,7 +342,7 @@ img{ max-width:100%; display:block; }
   font-family:var(--sans-tc); font-size:.71rem; font-weight:500;
   letter-spacing:.14em; color:var(--rouge); line-height:1.7;
 }
-.card__notes dd{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.7; }
+.card__notes dd{ margin:0; font-size:.86rem; color:var(--ink-soft); line-height:1.7; text-wrap:pretty; }
 .mapbtn{
   display:flex; align-items:center; justify-content:center; gap:.55rem;
   margin-top:1.2rem; padding:.72rem 1.2rem;
@@ -383,7 +380,7 @@ img{ max-width:100%; display:block; }
   display:block; font-family:var(--sans-tc); font-size:.74rem; font-weight:500;
   letter-spacing:.18em; color:var(--ink-soft); margin-bottom:.65rem;
 }
-.f .en{ color:var(--ink-ghost); font-size:.66rem; letter-spacing:.14em; margin-left:.5em; }
+.f .en{ color:var(--ink-faint); font-size:.66rem; letter-spacing:.14em; margin-left:.5em; }
 .f .req{ color:var(--rouge); margin-left:.25em; }
 .f .hint{ font-size:.68rem; letter-spacing:.06em; color:var(--ink-faint); font-weight:400; }
 
@@ -606,17 +603,10 @@ select{
           </div>
 
           <div class="f">
-            <span class="lg">飲食需求<span class="en">DIETARY</span><span class="hint"> 可複選</span></span>
+            <span class="lg">飲食需求<span class="en">DIETARY</span></span>
             <div class="chips" id="dietChips">
               <input type="checkbox" id="d1" value="葷食"><label for="d1">葷食</label>
-              <input type="checkbox" id="d2" value="全素"><label for="d2">全素</label>
-              <input type="checkbox" id="d3" value="蛋奶素"><label for="d3">蛋奶素</label>
-              <input type="checkbox" id="d4" value="不吃牛"><label for="d4">不吃牛</label>
-              <input type="checkbox" id="d5" value="其他過敏原"><label for="d5">其他過敏原</label>
-              <input type="checkbox" id="d6" value="其他"><label for="d6">其他</label>
-            </div>
-            <div id="allergyBox" hidden style="margin-top:1rem">
-              <input type="text" id="fAllergy" placeholder="請說明過敏原或特殊需求">
+              <input type="checkbox" id="d2" value="素食"><label for="d2">素食</label>
             </div>
           </div>
         </div>
@@ -755,13 +745,10 @@ document.querySelectorAll('input[name=attend]').forEach(r =>
     $('errBox').textContent = '';
   }));
 
-/* ── 過敏原自由輸入 ───────────────────────────────── */
-const ALLERGY_TRIGGERS = ['d5','d6'];
-if (CONFIG.allergyOtherEnabled) {
-  ALLERGY_TRIGGERS.forEach(id => $(id).addEventListener('change', () => {
-    $('allergyBox').hidden = !ALLERGY_TRIGGERS.some(t => $(t).checked);
-  }));
-}
+/* ── 葷食／素食互斥（表單是核取方塊，但這兩者不會同時成立）───── */
+['d1','d2'].forEach(id => $(id).addEventListener('change', e => {
+  if (e.target.checked) ['d1','d2'].filter(o => o !== id).forEach(o => { $(o).checked = false; });
+}));
 
 /* ── 捲動進場 ─────────────────────────────────────── */
 const io = new IntersectionObserver(es => es.forEach(e => {
@@ -793,14 +780,8 @@ $('rsvpForm').addEventListener('submit', async ev => {
     if ($('fKidsA').value) p.append(FIELD.kidsSeated, $('fKidsA').value);
     if ($('fKidsB').value) p.append(FIELD.kidsLap,    $('fKidsB').value);
 
-    const picked = [...document.querySelectorAll('#dietChips input:checked')].map(c => c.value);
-    if (CONFIG.allergyOtherEnabled) {
-      const note = $('fAllergy').value.trim();
-      picked.forEach(v => p.append(FIELD.diet, (v === '其他' && note) ? '__other_option__' : v));
-      if (note) p.append(FIELD.diet + '.other_option_response', note);
-    } else {
-      picked.forEach(v => p.append(FIELD.diet, v));
-    }
+    [...document.querySelectorAll('#dietChips input:checked')]
+      .forEach(c => p.append(FIELD.diet, c.value));
   }
 
   /* 多區段表單必要參數，少了 Google 只會收到第一頁 */
