@@ -318,10 +318,10 @@ img{ max-width:100%; display:block; }
 .introfig::after{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 1.6%,
-                               rgba(247,238,237,0) 98.4%, var(--paper) 100%),
-    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 1.6%,
-                               rgba(247,238,237,0) 98.4%, var(--paper) 100%);
+    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 10%,
+                               rgba(247,238,237,0) 90%, var(--paper) 100%),
+    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 10%,
+                               rgba(247,238,237,0) 90%, var(--paper) 100%);
 }
 
 .quote::before{ content:'「'; color:var(--wash); }
@@ -588,6 +588,10 @@ select{
     </header>
     <div class="swatches" id="dSwatches"></div>
     <p class="dress__note"><span class="nb">邀請您穿著以上色系或淺色系，</span><span class="nb">與我們一起入鏡</span></p>
+    <figure class="introfig">
+      <img src="photos/dress.jpg" width="1400" height="875" loading="lazy" decoding="async"
+           alt="Darren 與 Hanne 的婚紗照">
+    </figure>
   </div>
 </section>
 
@@ -707,7 +711,7 @@ select{
 <footer class="foot">
   <p class="foot__names" id="dFootNames"></p>
   <p class="foot__d">2026 . 11 . 07　TAIPEI</p>
-  <p class="foot__msg">期待在國泰萬怡與您相聚</p>
+  <p class="foot__msg">邀請您一起在國泰萬怡相聚♡</p>
 </footer>
 
 <script>
