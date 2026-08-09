@@ -706,7 +706,7 @@ select{
     </div>
 
     <div class="done" id="doneBox">
-      <p class="done__mark">✦</p>
+      <p class="done__mark">♡</p>
       <h3 class="done__t" id="doneT"></h3>
       <p class="done__s" id="doneS"></p>
       <button type="button" class="redo" id="redoBtn">修改回覆</button>
@@ -928,9 +928,9 @@ $('rsvpForm').addEventListener('submit', async ev => {
 
   $('formBox').hidden = true;
   $('doneT').textContent = yes ? '太好了，我們收到了' : '謝謝您的祝福';
-  $('doneS').textContent = yes
+  $('doneS').innerHTML = nbClauses(yes
     ? '11 月 7 日中午，我們留了位子等您，那天見 ♡'
-    : '這次沒能見到有點可惜，您的心意我們收下了，改天再約 ♡';
+    : '這次沒能見到有點可惜，您的心意我們收下了，改天再約 ♡');
   $('doneBox').classList.add('show');
   $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
 });
