@@ -8,7 +8,7 @@
 
 <!-- LINE / FB 預覽卡：爬蟲不跑 JS，這些必須是靜態且絕對網址 -->
 <meta property="og:title" content="Darren & Hanne 婚禮邀請">
-<meta property="og:description" content="2026.11.07（六）午宴．台北國泰萬怡酒店　誠摯邀請你來">
+<meta property="og:description" content="2026.11.07（六）午宴．台北國泰萬怡酒店　誠摯邀請您來">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:url" content="https://darrenchen77.github.io/wedding/">
@@ -324,7 +324,7 @@ img{ max-width:100%; display:block; }
   letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.3rem 0 0;
 }
 .card__hero{
-  font-family:var(--serif-en); font-size:1.3rem; letter-spacing:.05em;
+  font-family:var(--serif-en); font-size:1.3rem; letter-spacing:.01em;
   text-align:center; color:var(--rouge); margin:.9rem 0 1.1rem;
 }
 /* Cormorant 預設是舊體數字、字面又比中文矮，時間段要開 lining 數字並放大才會一樣大 */
@@ -544,7 +544,7 @@ select{
       <p class="sec__zh">服裝色彩建議</p>
     </header>
     <div class="swatches" id="dSwatches"></div>
-    <p class="dress__note"><span class="nb">邀請你穿著以上色系或淺色系，</span><span class="nb">與我們一起入鏡</span></p>
+    <p class="dress__note"><span class="nb">邀請您穿著以上色系或淺色系，</span><span class="nb">與我們一起入鏡</span></p>
   </div>
 </section>
 
@@ -626,7 +626,7 @@ select{
 
         <div class="f">
           <label for="fMsg">給新人的祝福<span class="en">BLESSING</span></label>
-          <textarea id="fMsg" rows="3" placeholder="留下你的悄悄話⋯"></textarea>
+          <textarea id="fMsg" rows="3" placeholder="留下您的悄悄話⋯"></textarea>
         </div>
 
         <p class="err" id="errBox" role="alert" aria-live="polite"></p>
@@ -790,7 +790,7 @@ $('rsvpForm').addEventListener('submit', async ev => {
   const name = $('fName').value.trim();
   const yes = $('aYes').checked, no = $('aNo').checked;
 
-  if (!name)       { err.textContent = '請留下你的名字。'; $('fName').focus(); return; }
+  if (!name)       { err.textContent = '請留下您的名字。'; $('fName').focus(); return; }
   if (!yes && !no) { err.textContent = '請選擇是否出席。'; return; }
   if (yes && !$('fAdults').value) { err.textContent = '請選擇大人人數。'; $('fAdults').focus(); return; }
   err.textContent = '';
@@ -832,10 +832,10 @@ $('rsvpForm').addEventListener('submit', async ev => {
   }
 
   $('formBox').hidden = true;
-  $('doneT').textContent = yes ? '收到了' : '謝謝你的祝福';
+  $('doneT').textContent = yes ? '收到了' : '謝謝您的祝福';
   $('doneS').textContent = yes
-    ? '十一月七日，我們留了位子等你。'
-    : '很可惜這次見不到，你的心意我們收下了。';
+    ? '十一月七日，我們留了位子等您。'
+    : '很可惜這次見不到，您的心意我們收下了。';
   $('doneBox').classList.add('show');
   $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
 });
