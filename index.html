@@ -303,6 +303,10 @@ img{ max-width:100%; display:block; }
   font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
 }
 .nb{ white-space:nowrap; }   /* 句內不斷行，讓折行只落在逗號處 */
+/* 引言下方的婚紗照 */
+.introfig{ margin:2.6rem 0 0; }
+.introfig img{ width:100%; height:auto; }
+
 .quote::before{ content:'「'; color:var(--wash); }
 .quote::after{ content:'」'; color:var(--wash); }
 
@@ -518,8 +522,8 @@ select{
 <section class="sec reveal">
   <div class="wrap">
     <header class="sec__head">
-      <h2 class="sec__en">The Countdown</h2>
-      <p class="sec__zh">倒數計時</p>
+      <h2 class="sec__en">Wedding Countdown</h2>
+      <p class="sec__zh">婚禮倒數計時</p>
     </header>
     <div class="clock" id="dClock">
       <div class="cd"><span class="cd__n" id="cdD">—</span><span class="cd__u"><b>天</b><i>DAYS</i></span></div>
@@ -529,6 +533,10 @@ select{
     </div>
     <p class="count__date" id="dDateEn"></p>
     <p class="quote" id="dQuote"></p>
+    <figure class="introfig">
+      <img src="photos/intro.jpg" width="1400" height="931" loading="lazy" decoding="async"
+           alt="Darren 與 Hanne 的婚紗照">
+    </figure>
   </div>
 </section>
 
