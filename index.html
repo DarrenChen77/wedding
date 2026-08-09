@@ -31,7 +31,7 @@ const CONFIG = {
   bride: 'Hanne',
 
   // ── 封面標語 ──────────────────────────────────────────
-  taglineEn: 'Meeting you was the best thing life had planned for me',
+  taglineEn: 'Meeting you is the best thing that has ever happened to me.',
   taglineZh: '遇見你，是人生最美好的安排',
 
   // ── 日期 ──────────────────────────────────────────────
@@ -203,6 +203,7 @@ img{ max-width:100%; display:block; }
   font-family:var(--serif-en); font-style:italic; font-weight:400;
   font-size:clamp(.72rem,3.1vw,.88rem); letter-spacing:.26em;
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.26em;
+  text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
 .hero__names{
   font-family:var(--serif-en); font-weight:300;
