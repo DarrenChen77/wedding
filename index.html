@@ -493,6 +493,17 @@ select{
 .done__mark{ font-family:var(--serif-en); font-style:italic; font-size:3rem; color:var(--rouge); margin:0 0 1rem; }
 .done__t{ font-family:var(--serif-tc); font-size:1.3rem; letter-spacing:.16em; margin:0 0 .8rem; }
 .done__s{ font-size:.92rem; color:var(--ink-soft); margin:0; line-height:1.95; }
+.redo{
+  margin-top:1.6rem; padding:.7rem 1.6rem; cursor:pointer;
+  font-family:var(--sans-tc); font-size:.78rem; letter-spacing:.18em;
+  color:var(--ink-soft); background:transparent; border:1px solid var(--wash);
+  transition:border-color .25s ease, color .25s ease;
+}
+.redo:hover{ border-color:var(--ink-soft); color:var(--ink); }
+.rsvp__hint{
+  text-align:center; font-size:.8rem; color:var(--ink-faint);
+  margin:-2.2rem 0 2.6rem; letter-spacing:.06em;
+}
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:2.6rem 0 2rem; text-align:center; }
@@ -610,6 +621,7 @@ select{
 
     <div id="formBox">
       <p class="rsvp__sub">為了幫您留好位子，請在 <b id="dDeadline"></b> 前填寫完</p>
+      <p class="rsvp__hint">送出後如需修改，再填一次即可，以最後一次為準</p>
 
       <form id="rsvpForm" novalidate>
         <div class="f">
@@ -697,6 +709,7 @@ select{
       <p class="done__mark">✦</p>
       <h3 class="done__t" id="doneT"></h3>
       <p class="done__s" id="doneS"></p>
+      <button type="button" class="redo" id="redoBtn">修改回覆</button>
     </div>
   </div>
 </section>
@@ -914,12 +927,22 @@ $('rsvpForm').addEventListener('submit', async ev => {
   }
 
   $('formBox').hidden = true;
-  $('doneT').textContent = yes ? '收到了' : '謝謝您的祝福';
+  $('doneT').textContent = yes ? '太好了，我們收到了' : '謝謝您的祝福';
   $('doneS').textContent = yes
-    ? '十一月七日，我們留了位子等您。'
-    : '很可惜這次見不到，您的心意我們收下了。';
+    ? '11 月 7 日中午，我們留了位子等您，那天見 ♡'
+    : '這次沒能見到有點可惜，您的心意我們收下了，改天再約 ♡';
   $('doneBox').classList.add('show');
   $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
+});
+
+/* ── 修改回覆：退回表單，欄位內容保留，改完再送一次 ───────── */
+$('redoBtn').addEventListener('click', () => {
+  $('doneBox').classList.remove('show');
+  $('formBox').hidden = false;
+  const btn = $('sendBtn');
+  btn.disabled = false; btn.textContent = '確認送出　SUBMIT';
+  $('errBox').textContent = '';
+  $('rsvpForm').scrollIntoView({ behavior:'smooth', block:'start' });
 });
 </script>
 </body>
