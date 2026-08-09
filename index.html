@@ -628,6 +628,10 @@ select{
             <div class="chips" id="dietChips">
               <input type="checkbox" id="d1" value="葷食"><label for="d1">葷食</label>
               <input type="checkbox" id="d2" value="素食"><label for="d2">素食</label>
+              <input type="checkbox" id="d3" value="其他"><label for="d3">其他</label>
+            </div>
+            <div id="dietOtherBox" hidden style="margin-top:.9rem">
+              <input type="text" id="fDietOther" placeholder="請說明，例如不吃牛、海鮮過敏">
             </div>
           </div>
         </div>
@@ -780,10 +784,11 @@ document.querySelectorAll('input[name=attend]').forEach(r =>
     $('errBox').textContent = '';
   }));
 
-/* ── 葷食／素食互斥（表單是核取方塊，但這兩者不會同時成立）───── */
+/* ── 葷食／素食互斥；「其他」可與兩者並存（例如葷食＋不吃牛）───── */
 ['d1','d2'].forEach(id => $(id).addEventListener('change', e => {
   if (e.target.checked) ['d1','d2'].filter(o => o !== id).forEach(o => { $(o).checked = false; });
 }));
+$('d3').addEventListener('change', e => { $('dietOtherBox').hidden = !e.target.checked; });
 
 /* ── 捲動進場 ─────────────────────────────────────── */
 const io = new IntersectionObserver(es => es.forEach(e => {
@@ -815,8 +820,12 @@ $('rsvpForm').addEventListener('submit', async ev => {
     if ($('fKidsA').value) p.append(FIELD.kidsSeated, $('fKidsA').value);
     if ($('fKidsB').value) p.append(FIELD.kidsLap,    $('fKidsB').value);
 
-    [...document.querySelectorAll('#dietChips input:checked')]
-      .forEach(c => p.append(FIELD.diet, c.value));
+    /* 表單那題開了「其他」，Google 的約定是送 __other_option__ ＋ .other_option_response */
+    const dietNote = $('fDietOther').value.trim();
+    [...document.querySelectorAll('#dietChips input:checked')].forEach(c => {
+      p.append(FIELD.diet, c.value === '其他' ? '__other_option__' : c.value);
+    });
+    if ($('d3').checked && dietNote) p.append(FIELD.diet + '.other_option_response', dietNote);
   }
 
   /* 多區段表單必要參數，少了 Google 只會收到第一頁 */
