@@ -363,6 +363,7 @@ img{ max-width:100%; display:block; }
   display:block; margin-top:.05rem;
   font-size:.83rem; letter-spacing:.06em; color:var(--ink-soft);
 }
+.card__logo{ width:8rem; height:auto; margin:1.1rem auto 0; opacity:.8; }
 .card__notes{
   margin-top:1.2rem; padding-top:1rem; border-top:1px dashed var(--wash);
   display:grid; grid-template-columns:auto 1fr;
@@ -492,7 +493,14 @@ select{
 
 /* ── 結尾 ──────────────────────────────────────────── */
 .foot{ padding:2.6rem 0 3.5rem; text-align:center; }
-.foot__logo{ width:9.5rem; height:auto; margin:1.6rem auto 0; opacity:.85; }
+/* 靠右，但保留與其他內容一致的左右邊界 */
+.foot__logo{
+  display:block; width:9.5rem; height:auto; opacity:.85;
+  margin:1.6rem var(--gut) 0 auto;
+}
+@media (min-width:34rem){   /* 內容欄有最大寬度時，對齊欄的右緣而不是螢幕右緣 */
+  .foot__logo{ margin-right:calc(50vw - var(--col)/2 + var(--gut)); }
+}
 /* 頁尾中文署名 */
 .foot__names{
   font-family:var(--serif-tc); font-weight:500; font-size:1.7rem;
@@ -700,7 +708,7 @@ select{
 <footer class="foot">
   <p class="foot__names" id="dFootNames"></p>
   <p class="foot__msg">邀請您一起在國泰萬怡相聚♡</p>
-  <img class="foot__logo" src="photos/venue-logo.png" width="399" height="225"
+  <img class="foot__logo" src="photos/venue-logo.png" width="399" height="114"
        loading="lazy" decoding="async" alt="台北國泰萬怡酒店 Courtyard by Marriott Taipei Downtown">
 </footer>
 
@@ -781,6 +789,8 @@ $('dCards').innerHTML = cards.map(c => `
       ${c.hall ? `<dt>廳別</dt><dd>${esc(c.hall)}</dd>` : ''}
       <dt>時間</dt><dd class="is-time">${nbClauses(c.time)}</dd>
     </dl>
+    <img class="card__logo" src="photos/venue-logo.png" width="399" height="114"
+         loading="lazy" decoding="async" alt="台北國泰萬怡酒店 Courtyard by Marriott">
     ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　Google Maps</a>` : ''}
     ${c.notes && c.notes.length ? `<dl class="card__notes">
       ${c.notes.map(n => `<dt>${esc(n.k)}</dt><dd>${nbClauses(n.v)}</dd>`).join('')}
