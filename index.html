@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -36,20 +36,20 @@ const CONFIG = {
 
   // ── 日期 ──────────────────────────────────────────────
   dateISO: '2026-11-07T12:30:00+08:00',   // 倒數基準＝開席
-  dateEn:  '2026.11.07 (SAT)',
+  dateEn:  '2026.11.07 (六)',
   quote:   '期待與你們相聚，共同見證我們人生中重要的一天。',
 
   // ── 證婚 ──────────────────────────────────────────────
   ceremony: {
     zh:    '證婚儀式',
     en:    'The Holy Ceremony',
-    hero:  '10:20 典禮開始',
+    hero:  '10:00 開放入場',
     place: '台北國泰萬怡酒店',
     hall:  '14F 戶外露臺區',
     time:  '10:00 入場｜10:20 典禮開始',
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
-      { k: '觀禮', v: '若你願意早點到，歡迎一起參與上午的證婚儀式，備有迎賓茶點' },
+      { k: '觀禮', v: '上午證婚儀式備有迎賓茶點' },
       { k: '天氣', v: '戶外場地，遇雨改於室內舉行' },
     ],
   },
@@ -75,7 +75,7 @@ const CONFIG = {
   // ← 這三色是照你們婚紗照配的，請換成你們真正想要的；不需要就寫 dressCode: []
   dressCode: [
     { hex: '#c9c6c0', zh: '淺灰',   en: 'Light Grey' },
-    { hex: '#ecd6bd', zh: '米色', en: 'Beige' },
+    { hex: '#ecd6bd', zh: '米杏色', en: 'Beige' },
     { hex: '#d5c7ae', zh: '燕麥米', en: 'Oatmeal' },
   ],
 
@@ -121,9 +121,9 @@ const RELATIONS = [
    ② 設計語彙 — 宣紙、墨、胭脂
    ═══════════════════════════════════════════════════════════════ */
 :root{
-  --paper:      #f4efe6;
-  --paper-2:    #ebe3d6;
-  --card:       #faf7f1;
+  --paper:      #f7f2ec;   /* 主色：米白 */
+  --paper-2:    #ece3d7;   /* 間隔色：較深的米 */
+  --card:       #fbf7f3;
   --wash:       #ded4c4;
   --ink:        #2a2724;
   --ink-soft:   #635c53;
@@ -132,8 +132,9 @@ const RELATIONS = [
   --rouge:      #9c4f4a;
   --sage-deep:  #5f7a6f;
 
-  --serif-tc: 'Noto Serif TC', 'Songti TC', serif;
-  --serif-en: 'Cormorant Garamond', 'Noto Serif TC', serif;
+  /* 中文一律黑體：Windows 用微軟正黑、Apple 用蘋方、其餘落到已載入的 Noto Sans TC */
+  --serif-tc: 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
+  --serif-en: 'Cormorant Garamond', 'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
   --sans-tc:  'Noto Sans TC', -apple-system, 'PingFang TC', sans-serif;
 
   --col: 34rem;
@@ -156,20 +157,24 @@ img{ max-width:100%; display:block; }
 /* ── 區塊標題：英文大標 ＋ 中文副標 ──────────────────── */
 .sec{ padding:5.5rem 0; }
 .sec--tint{ background:var(--paper-2); }
-.sec__head{ text-align:center; margin-bottom:3rem; }
-.sec__en{
-  font-family:var(--serif-en); font-weight:400;
-  font-size:clamp(1.9rem,8vw,2.5rem); letter-spacing:.06em;
-  color:var(--ink); margin:0;
-}
+.sec__head{ text-align:center; margin-bottom:3rem; display:flex; flex-direction:column; }
+/* 中文是主角、英文是配角：用 flex order 把 HTML 順序反過來顯示 */
 .sec__zh{
-  font-family:var(--serif-tc); font-weight:400;
-  font-size:.98rem; letter-spacing:.36em; color:var(--rouge);
-  margin:.75rem 0 0; padding-left:.36em;
+  order:1;
+  font-family:var(--serif-tc); font-weight:500;
+  font-size:clamp(1.55rem,6.6vw,2rem); letter-spacing:.28em;
+  color:var(--ink); margin:0; padding-left:.28em;
+}
+.sec__en{
+  order:2;
+  font-family:var(--serif-en); font-style:italic; font-weight:400;
+  font-size:1.2rem; letter-spacing:.14em;
+  color:var(--rouge); margin:.55rem 0 0;
 }
 .sec__head::after{
+  order:3;
   content:''; display:block; width:2.2rem; height:1px;
-  background:var(--wash); margin:1.6rem auto 0;
+  background:var(--wash); margin:1.5rem auto 0;
 }
 
 /* ── 封面 ──────────────────────────────────────────── */
@@ -187,8 +192,8 @@ img{ max-width:100%; display:block; }
 .hero__veil{ position:absolute; inset:0; z-index:1; }
 .hero--light .hero__veil{
   background:linear-gradient(to bottom,
-    rgba(250,247,241,.30) 0%, rgba(250,247,241,0) 22%,
-    rgba(244,239,230,.55) 52%, rgba(244,239,230,.93) 72%, var(--paper) 88%);
+    rgba(251,247,243,.30) 0%, rgba(251,247,243,0) 22%,
+    rgba(247,242,236,.55) 52%, rgba(247,242,236,.93) 72%, var(--paper) 88%);
 }
 .hero--dark .hero__veil{
   background:linear-gradient(to bottom,
@@ -196,7 +201,7 @@ img{ max-width:100%; display:block; }
     rgba(18,16,13,.30) 70%, rgba(18,16,13,.85) 100%);
 }
 .hero__inner{ position:relative; z-index:2; width:100%; max-width:var(--col); text-align:center; }
-.hero--light .hero__inner{ text-shadow:0 1px 20px rgba(250,247,241,.92); }
+.hero--light .hero__inner{ text-shadow:0 1px 20px rgba(251,247,243,.92); }
 .hero--dark  .hero__inner{ text-shadow:0 1px 26px rgba(12,10,8,.8); }
 
 .hero__eyebrow{
@@ -252,11 +257,11 @@ img{ max-width:100%; display:block; }
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
     linear-gradient(to right,
-      var(--paper) 0%, rgba(244,239,230,.55) 3%, rgba(244,239,230,0) 9%,
-      rgba(244,239,230,0) 91%, rgba(244,239,230,.55) 97%, var(--paper) 100%),
+      var(--paper) 0%, rgba(247,242,236,.55) 3%, rgba(247,242,236,0) 9%,
+      rgba(247,242,236,0) 91%, rgba(247,242,236,.55) 97%, var(--paper) 100%),
     linear-gradient(to bottom,
-      rgba(244,239,230,.34) 0%, rgba(244,239,230,.05) 30%,
-      rgba(244,239,230,.05) 74%, rgba(244,239,230,.34) 100%);
+      rgba(247,242,236,.34) 0%, rgba(247,242,236,.05) 30%,
+      rgba(247,242,236,.05) 74%, rgba(247,242,236,.34) 100%);
 }
 
 .hero__cue{
@@ -264,7 +269,7 @@ img{ max-width:100%; display:block; }
   width:1px; height:2.4rem; animation:cue 2.6s ease-in-out infinite;
   background:linear-gradient(to bottom,transparent,rgba(42,39,36,.5));
 }
-.hero--dark .hero__cue{ background:linear-gradient(to bottom,transparent,rgba(244,239,230,.7)); }
+.hero--dark .hero__cue{ background:linear-gradient(to bottom,transparent,rgba(247,242,236,.7)); }
 @keyframes cue{ 0%,100%{opacity:.25;transform:translateX(-50%) scaleY(.6);} 50%{opacity:1;transform:translateX(-50%) scaleY(1);} }
 
 /* ── 倒數 ──────────────────────────────────────────── */
@@ -279,9 +284,15 @@ img{ max-width:100%; display:block; }
   font-size:clamp(2.8rem,15vw,4rem); color:var(--rouge);
   font-variant-numeric:lining-nums tabular-nums;
 }
-.cd__u{
-  font-family:var(--sans-tc); font-size:.66rem; font-weight:500;
-  letter-spacing:.26em; color:var(--ink-faint); padding-left:.26em;
+/* 中文為主、英文為輔，同一排；級數壓小才塞得進 320px 的四欄 */
+.cd__u{ display:flex; align-items:baseline; justify-content:center; gap:.3em; }
+.cd__u b{
+  font-family:var(--serif-tc); font-size:.86rem; font-weight:500;
+  letter-spacing:0; color:var(--ink);
+}
+.cd__u i{
+  font-family:var(--sans-tc); font-style:normal; font-size:.56rem; font-weight:500;
+  letter-spacing:.12em; color:var(--ink-faint); padding-left:.12em;
 }
 .clock__done{
   grid-column:1/-1; font-family:var(--serif-tc);
@@ -289,9 +300,11 @@ img{ max-width:100%; display:block; }
   color:var(--rouge); text-align:center; margin:1rem 0;
 }
 .count__date{
-  text-align:center; font-family:var(--serif-en); font-size:1.35rem;
-  letter-spacing:.16em; color:var(--ink-soft); margin:2.4rem 0 0;
+  text-align:center; font-family:var(--serif-en); font-size:1.35rem; font-weight:600;
+  letter-spacing:.16em; color:var(--rouge); margin:2.4rem 0 0;
+  font-variant-numeric:lining-nums tabular-nums;   /* 換掉 Cormorant 預設的舊體數字 */
 }
+.count__date .cjk-fit{ font-size:.76em; }
 .quote{
   text-align:center; margin:1.6rem auto 0; max-width:26rem;
   font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
@@ -311,8 +324,8 @@ img{ max-width:100%; display:block; }
   letter-spacing:.24em; text-align:center; margin:0; color:var(--ink);
 }
 .card__en{
-  font-family:var(--serif-en); font-style:italic; font-size:1.05rem;
-  letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.25rem 0 0;
+  font-family:var(--serif-en); font-style:italic; font-size:.88rem;
+  letter-spacing:.1em; text-align:center; color:var(--ink-faint); margin:.3rem 0 0;
 }
 .card__hero{
   font-family:var(--serif-en); font-size:1.55rem; letter-spacing:.05em;
@@ -505,10 +518,10 @@ select{
       <p class="sec__zh">倒數計時</p>
     </header>
     <div class="clock" id="dClock">
-      <div class="cd"><span class="cd__n" id="cdD">—</span><span class="cd__u">DAYS</span></div>
-      <div class="cd"><span class="cd__n" id="cdH">—</span><span class="cd__u">HRS</span></div>
-      <div class="cd"><span class="cd__n" id="cdM">—</span><span class="cd__u">MIN</span></div>
-      <div class="cd"><span class="cd__n" id="cdS">—</span><span class="cd__u">SEC</span></div>
+      <div class="cd"><span class="cd__n" id="cdD">—</span><span class="cd__u"><b>天</b><i>DAYS</i></span></div>
+      <div class="cd"><span class="cd__n" id="cdH">—</span><span class="cd__u"><b>時</b><i>HRS</i></span></div>
+      <div class="cd"><span class="cd__n" id="cdM">—</span><span class="cd__u"><b>分</b><i>MIN</i></span></div>
+      <div class="cd"><span class="cd__n" id="cdS">—</span><span class="cd__u"><b>秒</b><i>SEC</i></span></div>
     </div>
     <p class="count__date" id="dDateEn"></p>
     <p class="quote" id="dQuote"></p>
@@ -550,7 +563,7 @@ select{
     </header>
 
     <div id="formBox">
-      <p class="rsvp__sub">為了幫你留好位子，請在 <b id="dDeadline"></b> 前告訴我們。</p>
+      <p class="rsvp__sub">為了幫您留好位子，請在 <b id="dDeadline"></b> 前通知。</p>
 
       <form id="rsvpForm" novalidate>
         <div class="f">
@@ -645,12 +658,26 @@ select{
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
+/* 依標點切句，短句段設成不斷行，折行就會落在標點上而不是把詞拆開。
+   超過 NB_MAX 的句段不包，否則窄螢幕會被撐破。 */
+const NB_MAX = 9;
+function nbClauses(str){
+  const parts = esc(str).split(/([，、｜])/);
+  const segs = [];
+  for (let i = 0; i < parts.length; i += 2) {
+    const seg = parts[i] + (parts[i + 1] || '');
+    if (seg) segs.push(seg);
+  }
+  return segs.map(s => [...s].length <= NB_MAX ? `<span class="nb">${s}</span>` : s).join('');
+}
+
 /* ── 封面 ─────────────────────────────────────────── */
 $('dGroom').textContent     = CONFIG.groom;
 $('dBride').textContent     = CONFIG.bride;
 $('dTagEn').textContent     = CONFIG.taglineEn || '';
 $('dTagZh').textContent     = CONFIG.taglineZh || '';
-$('dDateEn').textContent    = CONFIG.dateEn;
+/* 中文字面比拉丁數字高，縮一階才會等高 */
+$('dDateEn').innerHTML = esc(CONFIG.dateEn).replace(/([^\x00-\x7F]+)/g, '<span class="cjk-fit">$1</span>');
 /* 逗號分句、句內不斷行，避免在詞中間折行（例：陪／我） */
 $('dQuote').innerHTML = (CONFIG.quote || '').split('，')
   .map((s, i, a) => `<span class="nb">${esc(s)}${i < a.length - 1 ? '，' : ''}</span>`).join('');
@@ -692,11 +719,11 @@ $('dCards').innerHTML = cards.map(c => `
     <dl class="card__facts">
       <dt>地點</dt><dd>${esc(c.place)}<span class="card__addr">${esc(c.addr)}</span></dd>
       ${c.hall ? `<dt>廳別</dt><dd>${esc(c.hall)}</dd>` : ''}
-      <dt>時間</dt><dd>${esc(c.time)}</dd>
+      <dt>時間</dt><dd>${nbClauses(c.time)}</dd>
     </dl>
-    ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　TRANSPORTATION</a>` : ''}
+    ${CONFIG.mapUrl ? `<a class="mapbtn" href="${esc(CONFIG.mapUrl)}" target="_blank" rel="noopener">${PIN}交通指引　Google Maps</a>` : ''}
     ${c.notes && c.notes.length ? `<dl class="card__notes">
-      ${c.notes.map(n => `<dt>${esc(n.k)}</dt><dd>${esc(n.v)}</dd>`).join('')}
+      ${c.notes.map(n => `<dt>${esc(n.k)}</dt><dd>${nbClauses(n.v)}</dd>`).join('')}
     </dl>` : ''}
   </article>`).join('');
 
