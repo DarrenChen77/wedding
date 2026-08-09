@@ -37,7 +37,7 @@ const CONFIG = {
   // ── 日期 ──────────────────────────────────────────────
   dateISO: '2026-11-07T12:30:00+08:00',   // 倒數基準＝開席
   dateEn:  '2026.11.07 (SAT)',
-  quote:   '在無數個尋常的日子裡，謝謝你願意陪我把它們過成不尋常。',
+  quote:   '在無數個尋常的日子裡，謝謝你願意陪我，把它們過成不尋常。',
 
   // ── 證婚 ──────────────────────────────────────────────
   ceremony: {
@@ -298,6 +298,7 @@ img{ max-width:100%; display:block; }
   text-align:center; margin:1.6rem auto 0; max-width:26rem;
   font-size:.94rem; line-height:2.1; color:var(--ink-soft); letter-spacing:.1em;
 }
+.quote .nb{ white-space:nowrap; }
 .quote::before{ content:'「'; color:var(--wash); }
 .quote::after{ content:'」'; color:var(--wash); }
 
@@ -657,7 +658,9 @@ $('dBride').textContent     = CONFIG.bride;
 $('dTagEn').textContent     = CONFIG.taglineEn || '';
 $('dTagZh').textContent     = CONFIG.taglineZh || '';
 $('dDateEn').textContent    = CONFIG.dateEn;
-$('dQuote').textContent     = CONFIG.quote || '';
+/* 逗號分句、句內不斷行，避免在詞中間折行（例：陪／我） */
+$('dQuote').innerHTML = (CONFIG.quote || '').split('，')
+  .map((s, i, a) => `<span class="nb">${esc(s)}${i < a.length - 1 ? '，' : ''}</span>`).join('');
 $('dDeadline').textContent  = CONFIG.rsvpDeadline;
 $('dFootNames').textContent = `${CONFIG.groom} & ${CONFIG.bride}`;
 if (!CONFIG.quote) $('dQuote').hidden = true;
