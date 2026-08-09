@@ -167,11 +167,6 @@ img{ max-width:100%; display:block; }
   font-size:1.2rem; letter-spacing:.14em;
   color:var(--rouge); margin:.55rem 0 0;
 }
-.sec__head::after{
-  order:3;
-  content:''; display:block; width:2.2rem; height:1px;
-  background:var(--wash); margin:1.5rem auto 0;
-}
 
 /* ── 封面 ──────────────────────────────────────────── */
 .hero{
@@ -385,6 +380,13 @@ img{ max-width:100%; display:block; }
 .gallery{ display:grid; gap:.7rem; padding-bottom:1rem; }
 
 /* ── 回函 ──────────────────────────────────────────── */
+/* 兒童椅擺放對照圖 */
+.seatfig{ margin:-.6rem 0 1.9rem; }
+.seatfig img{ width:100%; height:auto; border:1px solid var(--wash); }
+.seatfig figcaption{
+  margin-bottom:.5rem; text-align:center;
+  font-family:var(--sans-tc); font-size:.7rem; letter-spacing:.14em; color:var(--ink-faint);
+}
 .rsvp__sub{ text-align:center; font-size:.9rem; color:var(--ink-soft); margin:-1.4rem 0 2.8rem; }
 .rsvp__sub b{ font-weight:600; color:var(--rouge); }
 
@@ -614,6 +616,12 @@ select{
               </select>
             </div>
           </div>
+
+          <figure class="seatfig">
+            <figcaption>兒童椅擺放方式參考</figcaption>
+            <img src="photos/kid-seat.jpg" width="1000" height="525" loading="lazy" decoding="async"
+                 alt="兒童椅擺放方式對照：不占位放在大人座位後面；占位則撤掉大人椅一張、靠近桌緣放">
+          </figure>
 
           <div class="f">
             <span class="lg">飲食需求<span class="en">DIETARY</span></span>
