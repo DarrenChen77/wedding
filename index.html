@@ -311,10 +311,10 @@ img{ max-width:100%; display:block; }
 .introfig::after{
   content:''; position:absolute; inset:0; pointer-events:none;
   background:
-    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 13%,
-                               rgba(247,238,237,0) 87%, var(--paper) 100%),
-    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 13%,
-                               rgba(247,238,237,0) 87%, var(--paper) 100%);
+    linear-gradient(to right,  var(--paper) 0%, rgba(247,238,237,0) 6%,
+                               rgba(247,238,237,0) 94%, var(--paper) 100%),
+    linear-gradient(to bottom, var(--paper) 0%, rgba(247,238,237,0) 6%,
+                               rgba(247,238,237,0) 94%, var(--paper) 100%);
 }
 
 .quote::before{ content:'「'; color:var(--wash); }
@@ -751,7 +751,7 @@ const PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 
 $('dCards').innerHTML = cards.map(c => `
   <article class="card">
-    <h3 class="card__zh">【 ${esc(c.zh)} 】</h3>
+    <h3 class="card__zh">꒰ ${esc(c.zh)} ꒱</h3>
     <p class="card__en">${esc(c.en)}</p>
     <p class="card__hero">${heroHTML(c.hero)}</p>
     <div class="card__rule"></div>
