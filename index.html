@@ -112,7 +112,8 @@ const ATTEND_YES = '是，我會出席';
 const ATTEND_NO  = '抱歉無法出席，獻上祝福';
 
 /* 與新人關係：送進 Google 表單的就是這些字，可自由增刪 */
-const RELATIONS = ['男方親友', '女方親友', '共同親友'];
+/* 這題現在是下拉選擇題，值必須與表單選項完全一致，否則整張回函會被退件 */
+const RELATIONS = ['男方親友', '女方親友', '雙方親友'];
 </script>
 
 <style>
@@ -204,10 +205,11 @@ img{ max-width:100%; display:block; }
   text-transform:uppercase; margin:0 0 1.1rem; padding-left:.2em;
   text-wrap:balance;   /* 句子長，讓各行長度平均，不要最後一行只剩一個字 */
 }
+/* Oleo Script 字面偏小、又有下伸筆畫，級數要放大、行高要鬆 */
 .hero__names{
-  font-family:var(--serif-en); font-weight:400; font-style:italic;
-  font-size:clamp(2.9rem,13.5vw,4.9rem);
-  line-height:1.12; letter-spacing:.005em; margin:0;
+  font-family:'Oleo Script', var(--serif-en), cursive; font-weight:400;
+  font-size:clamp(2.7rem,12.4vw,4.8rem);
+  line-height:1.22; letter-spacing:0; margin:0;
 }
 .hero__names .amp{
   font-family:'Oleo Script', cursive; font-style:normal;
@@ -238,7 +240,7 @@ img{ max-width:100%; display:block; }
   padding-inline:var(--gut); text-shadow:none; margin-bottom:3.4rem;
 }
 .hero--band .hero__eyebrow{ color:var(--rouge); opacity:1; }
-.hero--band .hero__names{ color:var(--ink); }
+.hero--band .hero__names{ color:#6f6a63; }   /* 比主文字色再淺一階的中灰 */
 .hero--band .hero__zh{ color:var(--ink-soft); opacity:1; }   /* 與倒數區的引言同色 */
 .hero__band{
   position:relative;
@@ -391,9 +393,8 @@ img{ max-width:100%; display:block; }
 .swatches{ display:flex; justify-content:center; gap:1.6rem; flex-wrap:wrap; }
 .sw{ text-align:center; }
 .sw__dot{
-  display:block; width:4.2rem; height:auto;
-  color:var(--wash);   /* 給 SVG 的 stroke 用 */
-  margin:0 auto .8rem;
+  display:block; width:4.2rem; height:4.2rem; border-radius:50%;
+  border:1px solid var(--wash); margin:0 auto .8rem;
 }
 .sw__zh{ margin:0; font-size:.92rem; letter-spacing:.12em; }
 .sw__en{
@@ -494,17 +495,9 @@ select{
 .done__s{ font-size:.92rem; color:var(--ink-soft); margin:0; line-height:1.95; }
 
 /* ── 結尾 ──────────────────────────────────────────── */
-.foot{ padding:2.6rem 0 3.5rem; text-align:center; }
-/* 靠右，但保留與其他內容一致的左右邊界 */
-.bottomfig-wrap{ padding:2.4rem 0 0; }
+.foot{ padding:2.6rem 0 2rem; text-align:center; }
+.bottomfig-wrap{ padding:.6rem 0 2.4rem; }
 .bottomfig-wrap .introfig{ margin-top:0; }
-.foot__logo{
-  display:block; width:9.5rem; height:auto; opacity:.85;
-  margin:1.6rem var(--gut) 0 auto;
-}
-@media (min-width:34rem){   /* 內容欄有最大寬度時，對齊欄的右緣而不是螢幕右緣 */
-  .foot__logo{ margin-right:calc(50vw - var(--col)/2 + var(--gut)); }
-}
 /* 頁尾中文署名 */
 .foot__names{
   font-family:var(--serif-tc); font-weight:500; font-size:1.7rem;
@@ -534,7 +527,7 @@ select{
   :root{ --gut:1.35rem; }
   .grid2{ grid-template-columns:1fr; gap:1.6rem; }
   .swatches{ gap:1.1rem; }
-  .sw__dot{ width:3.6rem; }
+  .sw__dot{ width:3.6rem; height:3.6rem; }
 }
 </style>
 </head>
@@ -708,21 +701,19 @@ select{
   </div>
 </section>
 
-<!-- ═══ 最底部照片 ═══ -->
-<section class="wrap bottomfig-wrap reveal">
-  <figure class="introfig">
-    <img src="photos/paris.jpg" width="1400" height="1047" loading="lazy" decoding="async"
-         alt="Darren 與 Hanne 在巴黎的求婚照">
-  </figure>
-</section>
-
 <!-- ═══ 結尾 ═══ -->
 <footer class="foot">
   <p class="foot__names" id="dFootNames"></p>
-  <p class="foot__msg">邀請您一起在國泰萬怡相聚♡</p>
-  <img class="foot__logo" src="photos/venue-logo.png" width="399" height="114"
-       loading="lazy" decoding="async" alt="台北國泰萬怡酒店 Courtyard by Marriott Taipei Downtown">
+  <p class="foot__msg">邀請您 11/7 一起在國泰萬怡相聚♡</p>
 </footer>
+
+<!-- ═══ 最底部照片 ═══ -->
+<section class="wrap bottomfig-wrap reveal">
+  <figure class="introfig">
+    <img src="photos/paris.jpg" width="1400" height="1049" loading="lazy" decoding="async"
+         alt="Darren 與 Hanne 在巴黎的求婚照">
+  </figure>
+</section>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -815,7 +806,7 @@ if (CONFIG.dressCode && CONFIG.dressCode.length) {
   $('secDress').hidden = false;
   $('dSwatches').innerHTML = CONFIG.dressCode.map(c => `
     <div class="sw">
-      <svg class="sw__dot" viewBox="0 0 32 29.6" aria-hidden="true"><path d="${HEART}" fill="${esc(c.hex)}" stroke="currentColor" stroke-width=".6"/></svg>
+      <span class="sw__dot" style="background:${esc(c.hex)}"></span>
       <p class="sw__zh">${esc(c.zh)}</p>
       <p class="sw__en">${esc(c.en)}</p>
     </div>`).join('');
