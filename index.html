@@ -107,7 +107,7 @@ const CONFIG = {
    （不能刪題重建，否則 entry ID 會變）：
    entry.1672724487 原「大人人數」  → 改題目「參加人數」
    entry.1605065909 原「兒童-需座位」→ 改題目「有嬰幼兒同行嗎？」選項：沒有／有
-   entry.1526729827 原「兒童-不占位」→ 改題目「嬰幼兒座位需求」選項：需要嬰兒椅（佔位）／不佔位 */
+   entry.1526729827 原「兒童-不占位」→ 改題目「嬰幼兒座位需求」選項：需要嬰兒椅（占位）／不占位 */
 const FIELD = {
   name:       'entry.688717120',
   contact:    'entry.2037776860',
@@ -125,8 +125,8 @@ const ATTEND_NO  = '抱歉無法出席，獻上祝福';
 /* 這四個字串必須與 Google 表單選項一字不差（含全形括號），否則整張回函會被退件 */
 const INFANT_NO  = '沒有';
 const INFANT_YES = '有';
-const SEAT_CHAIR = '需要嬰兒椅（佔位）';
-const SEAT_LAP   = '不佔位';
+const SEAT_CHAIR = '需要嬰兒椅（占位）';
+const SEAT_LAP   = '不占位';
 
 /* 與新人關係：送進 Google 表單的就是這些字，可自由增刪 */
 /* 這題現在是下拉選擇題，值必須與表單選項完全一致，否則整張回函會被退件 */
@@ -721,16 +721,16 @@ select{
               <span class="lg">嬰幼兒座位需求<span class="en">INFANT SEATING</span><span class="req">*</span></span>
               <div class="pick">
                 <input type="radio" name="infantSeat" id="sChair" value="chair">
-                <label for="sChair">需要嬰兒椅<br>（佔位）</label>
+                <label for="sChair">需要嬰兒椅<br>（占位）</label>
                 <input type="radio" name="infantSeat" id="sLap" value="lap">
-                <label for="sLap">不佔位</label>
+                <label for="sLap">不占位</label>
               </div>
             </div>
 
             <figure class="seatfig">
               <figcaption>嬰兒椅擺放方式參考</figcaption>
               <img src="photos/kid-seat.jpg" width="1000" height="470" loading="lazy" decoding="async"
-                   alt="嬰兒椅擺放方式對照：佔位（需要嬰兒椅）須撤換掉一張大人椅；不佔位則放在大人座位後方">
+                   alt="嬰兒椅擺放方式對照：占位（需要嬰兒椅）須撤換掉一張大人椅；不占位則放在大人座位後方">
             </figure>
           </div>
 
