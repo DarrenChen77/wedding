@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Darren and Hanne Wedding//TW
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:wedding-20261107@darrenchen77.github.io
+DTSTAMP:20260817T000000Z
+DTSTART:20261107T020000Z
+DTEND:20261107T070000Z
+SUMMARY:Darren & Hanne 婚禮
+LOCATION:台北國泰萬怡酒店（台北市中山區民生東路三
+ 段 6 號）
+DESCRIPTION:10:00 入場｜10:10 證婚（14F 戶外露臺）\n12:00 
+ 入席｜12:30 午宴（2F 霖苑廳）\n邀請函：https://darrench
+ en77.github.io/wedding/
+URL:https://darrenchen77.github.io/wedding/
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:明天是 Darren & Hanne 的婚禮
+END:VALARM
+END:VEVENT
+END:VCALENDAR

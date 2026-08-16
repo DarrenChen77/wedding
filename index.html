@@ -45,7 +45,7 @@ const CONFIG = {
   // ── 關於我們 ──────────────────────────────────────────
   about: {
     groom: { photo:'photos/groom.jpg', en:'The Groom', zh:'新郎　陳奕錩' },
-    bride: { photo:'photos/bride.jpg', en:'The Bride', zh:'新娘　李芝儀' },
+    bride: { photo:'photos/bride.jpg?v=3', en:'The Bride', zh:'新娘　李芝儀' },
   },
 
 
@@ -56,7 +56,7 @@ const CONFIG = {
     hero:  '10:00 開放入場',
     place: '台北國泰萬怡酒店',
     hall:  '14F 戶外露臺區',
-    time:  '10:00 入場｜10:20 證婚開始',
+    time:  '10:00 入場｜10:10 證婚開始',
     addr:  '台北市中山區民生東路三段 6 號',
     notes: [
       { k: '觀禮', v: '上午證婚儀式備有迎賓茶點' },
@@ -113,6 +113,7 @@ const FIELD = {
   contact:    'entry.2037776860',
   relation:   'entry.1738306370',
   attending:  'entry.2126822305',
+  part:       'entry.2037939671',
   guests:     'entry.1672724487',
   infants:    'entry.1605065909',
   infantSeat: 'entry.1526729827',
@@ -121,6 +122,11 @@ const FIELD = {
 };
 const ATTEND_YES = '是，我會出席';
 const ATTEND_NO  = '抱歉無法出席，獻上祝福';
+
+/* 場次題（選「是，我會出席」後才出現），字串必須與表單「證婚＆午宴」選項一字不差 */
+const PART_BOTH     = '出席證婚及午宴';
+const PART_BANQUET  = '僅出席午宴';
+const PART_CEREMONY = '僅出席證婚';
 
 /* 這四個字串必須與 Google 表單選項一字不差（含全形括號），否則整張回函會被退件 */
 const INFANT_NO  = '沒有';
@@ -456,6 +462,8 @@ select{
 ::placeholder{ color:var(--ink-ghost); opacity:1; }
 
 .pick{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+.pick--stack{ grid-template-columns:1fr; }
+.pick--stack label{ min-height:3.3rem; }
 .pick input{ position:absolute; opacity:0; width:0; height:0; }
 .pick label{
   position:relative; display:flex; align-items:center; justify-content:center;
@@ -481,7 +489,7 @@ select{
   color:var(--ink-soft); border:1.5px solid var(--wash); border-radius:999px;
   background:var(--card); transition:background .2s ease,color .2s ease,border-color .2s ease;
 }
-.chips input:checked + label{ border-color:var(--sage-deep); background:var(--sage-deep); color:var(--paper); }
+.chips input:checked + label{ border-color:var(--rouge); background:var(--rouge); color:var(--paper); }
 .chips input:focus-visible + label{ outline:2px solid var(--rouge); outline-offset:2px; }
 
 .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:1.3rem; }
@@ -603,7 +611,7 @@ select{
 <!-- ═══ 封面下方的婚紗合照 ═══ -->
 <section class="wrap topfig-wrap reveal">
   <figure class="introfig">
-    <img src="photos/intro.jpg" width="1400" height="873" loading="lazy" decoding="async"
+    <img src="photos/intro.jpg?v=2" width="3200" height="1995" loading="lazy" decoding="async"
          alt="Darren 與 Hanne 的婚紗照">
   </figure>
 </section>
@@ -635,6 +643,9 @@ select{
       <p class="sec__zh">婚禮資訊</p>
     </header>
     <div id="dCards"></div>
+    <a class="mapbtn" href="wedding.ics" style="margin-top:1.6rem">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></svg>
+      加入行事曆　Add to Calendar</a>
   </div>
 </section>
 
@@ -648,7 +659,7 @@ select{
     <div class="swatches" id="dSwatches"></div>
     <p class="dress__note"><span class="nb">邀請您穿著以上色系或淺色系，</span><span class="nb">與我們一起入鏡</span></p>
     <figure class="introfig">
-      <img src="photos/dress.jpg" width="1400" height="875" loading="lazy" decoding="async"
+      <img src="photos/dress.jpg?v=2" width="3200" height="2000" loading="lazy" decoding="async"
            alt="Darren 與 Hanne 的婚紗照">
     </figure>
   </div>
@@ -662,7 +673,7 @@ select{
   <div class="wrap">
     <header class="sec__head">
       <h2 class="sec__en">Awaiting Your Reply</h2>
-      <p class="sec__zh">午宴出席回函</p>
+      <p class="sec__zh">出席回函</p>
     </header>
 
     <div id="formBox">
@@ -696,8 +707,21 @@ select{
 
         <div id="details">
           <div class="f">
+            <span class="lg">證婚＆午宴<span class="en">SESSIONS</span><span class="req">*</span></span>
+            <div class="pick pick--stack">
+              <input type="radio" name="part" id="pBoth" value="both">
+              <label for="pBoth">出席證婚及午宴</label>
+              <input type="radio" name="part" id="pBan" value="banquet">
+              <label for="pBan">僅出席午宴</label>
+              <input type="radio" name="part" id="pCer" value="ceremony">
+              <label for="pCer">僅出席證婚</label>
+            </div>
+          </div>
+
+          <div id="guestsBox" hidden>
+          <div class="f">
             <label for="fGuests">參加人數<span class="en">GUESTS</span><span class="req">*</span>
-              <span class="hint" style="display:block;margin-top:.35rem">請填寫實際需要安排座位的人數</span>
+              <span class="hint" style="display:block;margin-top:.35rem">請填寫實際出席人數</span>
             </label>
             <select id="fGuests">
               <option value="">請選擇</option>
@@ -705,7 +729,9 @@ select{
               <option>4</option><option>5</option><option>6</option>
             </select>
           </div>
+          </div><!-- /guestsBox -->
 
+          <div id="banquetBox" hidden>
           <div class="f">
             <span class="lg">有嬰幼兒同行嗎？<span class="en">INFANTS</span></span>
             <div class="pick">
@@ -745,12 +771,17 @@ select{
               <input type="text" id="fDietOther" placeholder="請說明，例如不吃牛、海鮮過敏">
             </div>
           </div>
+          </div><!-- /banquetBox -->
         </div>
 
         <div class="f">
           <label for="fMsg">給新人的祝福<span class="en">BLESSING</span></label>
           <textarea id="fMsg" rows="3" placeholder="留下您的悄悄話⋯"></textarea>
         </div>
+
+        <a class="mapbtn" href="wedding.ics" style="margin-bottom:1.1rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/></svg>
+          加入行事曆　Add to Calendar</a>
 
         <p class="err" id="errBox" role="alert" aria-live="polite"></p>
         <button type="submit" class="send" id="sendBtn">確認送出　SUBMIT</button>
@@ -775,7 +806,7 @@ select{
 <!-- ═══ 最底部照片 ═══ -->
 <section class="wrap bottomfig-wrap reveal">
   <figure class="introfig">
-    <img src="photos/paris.jpg" width="1400" height="1049" loading="lazy" decoding="async"
+    <img src="photos/paris.jpg?v=2" width="2560" height="1918" loading="lazy" decoding="async"
          alt="Darren 與 Hanne 在巴黎的求婚照">
   </figure>
 </section>
@@ -921,10 +952,18 @@ $('fRelation').insertAdjacentHTML('beforeend',
   if (!tick()) { const t = setInterval(() => { if (tick()) clearInterval(t); }, 1000); }
 })();
 
-/* ── 出席分流 ─────────────────────────────────────── */
+/* ── 出席分流：選「是」展開場次題 ─────────────────────── */
 document.querySelectorAll('input[name=attend]').forEach(r =>
   r.addEventListener('change', () => {
     $('details').classList.toggle('open', $('aYes').checked);
+    $('errBox').textContent = '';
+  }));
+
+/* ── 場次分流：選定任一場次問人數；嬰幼兒／飲食是午宴的事，僅證婚不問 ── */
+document.querySelectorAll('input[name=part]').forEach(r =>
+  r.addEventListener('change', () => {
+    $('guestsBox').hidden  = !($('pBoth').checked || $('pBan').checked || $('pCer').checked);
+    $('banquetBox').hidden = !($('pBoth').checked || $('pBan').checked);
     $('errBox').textContent = '';
   }));
 
@@ -953,11 +992,14 @@ $('rsvpForm').addEventListener('submit', async ev => {
   const err = $('errBox');
   const name = $('fName').value.trim();
   const yes = $('aYes').checked, no = $('aNo').checked;
+  const pBoth = $('pBoth').checked, pBan = $('pBan').checked, pCer = $('pCer').checked;
+  const banquet = pBoth || pBan;   /* 完成訊息分中午／上午版用 */
 
   if (!name)       { err.textContent = '請留下您的名字。'; $('fName').focus(); return; }
   if (!yes && !no) { err.textContent = '請選擇是否出席。'; return; }
+  if (yes && !pBoth && !pBan && !pCer) { err.textContent = '請選擇出席場次。'; return; }
   if (yes && !$('fGuests').value) { err.textContent = '請選擇參加人數。'; $('fGuests').focus(); return; }
-  if (yes && $('iYes').checked && !$('sChair').checked && !$('sLap').checked) {
+  if (banquet && $('iYes').checked && !$('sChair').checked && !$('sLap').checked) {
     err.textContent = '請選擇嬰幼兒座位需求。'; return;
   }
   err.textContent = '';
@@ -967,10 +1009,13 @@ $('rsvpForm').addEventListener('submit', async ev => {
   p.append(FIELD.contact,   $('fContact').value.trim());
   p.append(FIELD.relation,  $('fRelation').value);
   p.append(FIELD.attending, yes ? ATTEND_YES : ATTEND_NO);
+  if (yes) p.append(FIELD.part, pBoth ? PART_BOTH : pBan ? PART_BANQUET : PART_CEREMONY);
   p.append(FIELD.message,   $('fMsg').value.trim());
 
-  if (yes) {
-    p.append(FIELD.guests, $('fGuests').value);
+  if (yes) p.append(FIELD.guests, $('fGuests').value);
+
+  /* 嬰幼兒／飲食是午宴的事，僅出席證婚不送 */
+  if (banquet) {
     if ($('iNo').checked || $('iYes').checked)
       p.append(FIELD.infants, $('iYes').checked ? INFANT_YES : INFANT_NO);
     if ($('iYes').checked)
@@ -1006,9 +1051,10 @@ $('rsvpForm').addEventListener('submit', async ev => {
 
   $('formBox').hidden = true;
   $('doneT').textContent = yes ? '太好了，我們收到了' : '謝謝您的祝福';
-  $('doneS').innerHTML = nbClauses(yes
-    ? '11 月 7 日中午，我們留了位子等您，那天見 ♡'
-    : '這次沒能見到有點可惜，您的心意我們收下了，改天再約 ♡');
+  $('doneS').innerHTML = nbClauses(
+    yes && banquet ? '11 月 7 日中午，我們留了位子等您，那天見 ♡'
+    : yes          ? '11 月 7 日上午，我們在 14F 戶外露臺等您，那天見 ♡'
+    :                '這次沒能見到有點可惜，您的心意我們收下了，改天再約 ♡');
   $('doneBox').classList.add('show');
   $('doneBox').scrollIntoView({ behavior:'smooth', block:'center' });
 });
